@@ -1,0 +1,39 @@
+.headers {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1440px;
+}
+.navigation {
+  display: flex;
+  width: 248px;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 41px;
+}
+.managment {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1128px;
+  gap: 24px;
+  margin: 32px;
+}

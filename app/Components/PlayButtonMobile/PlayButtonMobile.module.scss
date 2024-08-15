@@ -1,0 +1,44 @@
+@import '../../Colors/common-colors.scss';
+.playButton {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 8px;
+  color: red;
+}
+.dark {
+  background-color: $primary-color;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+.light {
+  background-color: $primary-color;
+  border-radius: 50%;
+}
+
+.playButton:hover {
+  cursor: pointer;
+}
+
+.play {
+  width: 32px;
+  height: 32px;
+}
+
+.notPlay {
+  width: 32px;
+  height: 32px;
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .dark {
+    width: 24px;
+    height: 24px;
+  }
+  .light {
+    width: 24px;
+    height: 24px;
+  }
+}

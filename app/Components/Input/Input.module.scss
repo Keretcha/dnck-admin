@@ -1,0 +1,27 @@
+@import '../../Colors/light-colors.scss';
+@import '../../Colors/common-colors.scss';
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid $disable-stroke-white;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.14px;
+  border-radius: 12px;
+  gap: 4px;
+}
+.input {
+  display: flex;
+  border: none;
+  outline: none;
+  width: 100%;
+  border-radius: 12px;
+  background: none;
+  color: $primary-black;
+}
+
+:global(body.dark) .dark {
+  color: $primary-white;
+}

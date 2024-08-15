@@ -1,0 +1,66 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/light-colors.scss';
+@import '../../Colors/dark-colors.scss';
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  width: 32px;
+  max-width: 100%;
+}
+
+.dropdownDark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  width: 32px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.dropdownContainer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  position: relative;
+  z-index: -1;
+}
+
+.dropdownContainer.visible {
+  opacity: 1;
+}
+
+.visible.dropdownContainer {
+  z-index: 1;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.left {
+  justify-content: flex-end;
+}
+
+.middle {
+  justify-content: center;
+}
+
+.right {
+  justify-content: flex-start;
+}
+
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    width: 24px;
+  }
+  .left {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,50 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  border-radius: 0 0 12px 12px;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  max-width: 1440px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.search {
+  width: 100%;
+  max-width: 503px;
+}
+.button {
+  display: flex;
+  justify-content: center;
+}
+@media screen and (max-width: 1023px) {
+  .search {
+    display: flex;
+  }
+  .content {
+    display: none;
+  }
+  .lightContainer {
+    display: none;
+  }
+  .darkContainer {
+    display: none;
+  }
+}
+.test {
+  width: 742px;
+  padding: 12px;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+}

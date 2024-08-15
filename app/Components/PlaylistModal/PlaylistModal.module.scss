@@ -1,0 +1,28 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+.modalWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  gap: 16px;
+}
+.headingWrapper {
+  text-align: center;
+}
+.heading {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+.dark {
+  color: $background-color;
+}
+.light {
+  color: $primary-black;
+}
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

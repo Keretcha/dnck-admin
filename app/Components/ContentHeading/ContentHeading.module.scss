@@ -1,0 +1,12 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/light-colors.scss';
+@import '../../Colors/dark-colors.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.more {
+  color: $primary-color;
+}
