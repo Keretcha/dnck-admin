@@ -19,7 +19,6 @@ const Player: PlayerType = (props: PlayerPropsInterface) => {
           image={'/image75.png'}
           songName={'Lose Control'}
           artistName={'Teddy Swing'}
-          onClick={() => {}}
         />
       </div>
     </div>

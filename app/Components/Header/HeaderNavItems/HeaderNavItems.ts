@@ -19,7 +19,7 @@ export const headerNavItems: NavItemPropsInterface[] = [
   },
   {
     icon: IconNameEnum.PlayList,
-    href: '/musics',
+    href: '/music',
     title: 'Musics',
   },
 ];

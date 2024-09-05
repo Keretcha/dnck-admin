@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import Heading from '../Components/Heading/Heading';
-import { HeadingTypeEnum } from '../Components/Heading/enums/heading-type.enum';
-import Text from '../Components/Text/Text';
-import { TextHtmlTypeEnum } from '../Components/Text/enums/text-html-type.enum';
-import { TextTypeEnum } from '../Components/Text/enums/text-type.enum';
+import Heading from '../../Components/Heading/Heading';
+import { HeadingTypeEnum } from '../../Components/Heading/enums/heading-type.enum';
+import Text from '../../Components/Text/Text';
+import { TextHtmlTypeEnum } from '../../Components/Text/enums/text-html-type.enum';
+import { TextTypeEnum } from '../../Components/Text/enums/text-type.enum';
 import styles from './uploaded.module.scss';
 
 const Uploaded = (): JSX.Element => {

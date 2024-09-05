@@ -1,5 +1,7 @@
 'use client';
 // import Link from 'next/link';
+import axios from 'axios';
+import router from 'next/router';
 import { useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
@@ -7,23 +9,21 @@ import styles from './addMusicForm.module.scss';
 
 const AddMusicForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
-  // const onSubmit = () => {
-  //   axios.post(`/register`, {
-  //     name,
-  //     song,
-  //     album,
-  //     bio,
-  //   });
-  // };
 
-  const onSubmit = (values: object): void => {
+  const onSubmit = async (values: object): Promise<void> => {
     'name';
-    'song';
-    'album';
-    'bio';
-    console.log(values);
-  };
+    'uploadAlbumCover';
+    'description';
 
+    console.log(values);
+    try {
+      await axios.post('http://10.10.51.20:3000/artists', values);
+      console.log();
+      router.push('/uploaded');
+    } catch (err) {
+      console.error('Can not load this page', err);
+    }
+  };
   return (
     <div className={styles.addArtist}>
       <form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>

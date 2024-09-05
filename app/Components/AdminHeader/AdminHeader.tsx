@@ -13,30 +13,28 @@ import { AdminHeaderPropsInterface } from './interfaces/admin-header-props.inter
 
 const AdminHeader = (props: AdminHeaderPropsInterface): JSX.Element => {
   return (
-    <div className="container">
-      <div className={styles.headers}>
-        <div className={styles.navigation}>
-          <div className={styles.logo}>
-            <Logo />
-          </div>
-          <div className={styles.navbar}>
-            <NavMenu items={headerNavItems} />
-            <div className={styles.managment}>
-              <Text
-                htmlType={TextHtmlTypeEnum.P}
-                type={TextTypeEnum.SecondaryTextMedium}
-                className={styles.navBarText}
-              >
-                Managment:
-              </Text>
-              <NavMenu items={navBarItems} />
-            </div>
+    <div className={styles.headers}>
+      <div className={styles.navigation}>
+        <div className={styles.logo}>
+          <Logo />
+        </div>
+        <div className={styles.navbar}>
+          <NavMenu items={headerNavItems} />
+          <div className={styles.managment}>
+            <Text
+              htmlType={TextHtmlTypeEnum.P}
+              type={TextTypeEnum.SecondaryTextMedium}
+              className={styles.navBarText}
+            >
+              Managment:
+            </Text>
+            <NavMenu items={navBarItems} />
           </div>
         </div>
-        <div className={styles.header}>
-          <Header />
-          <div className={styles.content}>{props.children}</div>
-        </div>
+      </div>
+      <div className={styles.header}>
+        <Header />
+        <div className={styles.content}>{props.children}</div>
       </div>
     </div>
   );

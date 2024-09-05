@@ -1,6 +1,6 @@
-import AddMusicForm from '../Components/Forms/addMusicForm/addMusicForm';
-import Heading from '../Components/Heading/Heading';
-import { HeadingTypeEnum } from '../Components/Heading/enums/heading-type.enum';
+import AddMusicForm from '../../Components/Forms/addMusicForm/addMusicForm';
+import Heading from '../../Components/Heading/Heading';
+import { HeadingTypeEnum } from '../../Components/Heading/enums/heading-type.enum';
 import styles from './page.module.scss';
 
 export default function Home(): JSX.Element {

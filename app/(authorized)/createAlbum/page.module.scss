@@ -1,14 +1,18 @@
+@import '/app/Colors/common-colors.scss';
+@import '/app/Colors/dark-colors.scss';
+@import '/app/Colors/admin-colors.scss';
+
 .content {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 90px;
   gap: 16px;
+  color: $primary-white;
 }
+
 .forms {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-  

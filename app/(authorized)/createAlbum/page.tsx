@@ -1,6 +1,6 @@
-import AddAlbumForm from '../Components/Forms/addAlbumForm/addAlbumForm';
-import Heading from '../Components/Heading/Heading';
-import { HeadingTypeEnum } from '../Components/Heading/enums/heading-type.enum';
+import AddAlbumForm from '../../Components/Forms/addAlbumForm/addAlbumForm';
+import Heading from '../../Components/Heading/Heading';
+import { HeadingTypeEnum } from '../../Components/Heading/enums/heading-type.enum';
 import styles from './page.module.scss';
 
 export default function Home(): JSX.Element {

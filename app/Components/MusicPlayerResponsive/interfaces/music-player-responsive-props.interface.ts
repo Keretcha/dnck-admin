@@ -3,5 +3,4 @@ export interface MusicPlayerResponsivePropsInterface {
   songName: string;
   artistName: string;
   className?: string;
-  onClick: () => void;
 }
