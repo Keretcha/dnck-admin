@@ -1,7 +1,10 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
 .headers {
   display: flex;
   width: 100%;
-  border: 1px solid red;
   padding: 24px;
 }
 .navigation {
@@ -16,6 +19,7 @@
   flex-direction: column;
   gap: 16px;
   align-items: center;
+  color: $seconday-white;
 }
 .navbar {
   display: flex;

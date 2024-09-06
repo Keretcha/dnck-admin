@@ -1,6 +1,4 @@
-'use client';
-
-import Authorization from './logIn/page';
+import MainPage from './(authorized)/mainPage/page';
 import styles from './page.module.scss';
 
 export default function Home(): JSX.Element {
@@ -8,8 +6,7 @@ export default function Home(): JSX.Element {
     <>
       <div className={styles.container}>
         <div className={styles.content}>
-          <Authorization />
-          {/* <MainPage /> */}
+          <MainPage />
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { NextFont } from 'next/dist/compiled/@next/font';
 import { Inter } from 'next/font/google';
 import './globals.css';
-// import Logo from './Components/Header/Logo/Logo';
+import AdminHeader from './Components/AdminHeader/AdminHeader';
 
 const inter: NextFont = Inter({
   subsets: ['latin'],
@@ -23,8 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <Logo /> */}
-        {children}
+        <div className="content">
+          <AdminHeader>{children}</AdminHeader>
+        </div>
       </body>
     </html>
   );
