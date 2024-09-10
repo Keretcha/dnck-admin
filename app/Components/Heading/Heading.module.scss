@@ -1,0 +1,42 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/light-colors.scss';
+@import '../../Colors/dark-colors.scss';
+
+.h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.h2 {
+  color: $primary-white;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.h3 {
+  color: $primary-white;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.h4 {
+  color: $primary-white;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.h5 {
+  font-size: 24px;
+  font-weight: 500;
+  color: $primary-white;
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .h5 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .h5-dark {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,20 @@
+@import '../../../Colors/common-colors.scss';
+@import '../../../Colors/dark-colors.scss';
+@import '../../../Colors/light-colors.scss';
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  flex-basis: 865px;
+  gap: 16px;
+  border: none;
+  background: none;
+}
+.searching {
+  flex-basis: 742px;
+  background: none;
+}
+.arrow {
+  display: flex;
+  flex-flow: row nowrap;
+}

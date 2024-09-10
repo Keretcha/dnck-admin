@@ -1,0 +1,81 @@
+@import '../Colors/common-colors.scss';
+@import '../Colors/dark-colors.scss';
+@import '../Colors/light-colors.scss';
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  color: $primary-white;
+}
+.test {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+.projectName {
+  color: $primary-color;
+}
+.heading {
+  display: flex;
+  flex-flow: column wrap;
+}
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.authorizationForm {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 16px;
+}
+
+.inputs {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 8px;
+}
+
+.authorizationInput {
+  width: 100%;
+  width: 500px;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid $disable-stroke-dark;
+  outline: none;
+  color: $gray-500;
+  background-color: $background-color-dark-mode;
+}
+.check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.checkbox {
+  width: 24px;
+  height: 24px;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.buttonContainer {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+.signUpContainer {
+  display: flex;
+  gap: 8px;
+}
+.signUp {
+  color: $primary-color;
+}
+.error {
+  color: red;
+}

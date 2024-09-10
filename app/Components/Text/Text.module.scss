@@ -1,0 +1,37 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
+.primaryTextLarge {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.secondaryTextMedium {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.secondaryTextMediumBold {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.secondaryTextSmall {
+  font-size: 14px;
+  font-weight: 400;
+}
+.secondaryTextSmallBold {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.secondaryTextExtraSmall {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.tinyText {
+  font-size: 10px;
+  font-weight: 400;
+}

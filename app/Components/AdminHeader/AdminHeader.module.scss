@@ -1,0 +1,42 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
+.headers {
+  display: flex;
+  width: 100%;
+  padding: 24px;
+}
+.navigation {
+  display: flex;
+  width: 248px;
+  flex-direction: column;
+  align-items: center;
+  // gap: 41px;
+}
+.managment {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  color: $seconday-white;
+}
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1128px;
+  gap: 117px;
+  margin: 32px;
+}

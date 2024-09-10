@@ -1,0 +1,21 @@
+@import '../../../Colors/common-colors.scss';
+@import '../../../Colors/light-colors.scss';
+@import '../../../Colors/dark-colors.scss';
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  line-height: 19px;
+}
+
+.button:hover {
+  background-color: $hovered-dark;
+}
+
+.button:active {
+  background-color: $clicked-dark;
+}

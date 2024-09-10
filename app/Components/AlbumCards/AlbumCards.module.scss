@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1144px;
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .container {
+    max-height: 164px;
+    flex-flow: column wrap;
+    overflow-x: scroll;
+    gap: 8px;
+  }
+}

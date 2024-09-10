@@ -1,0 +1,15 @@
+@import '../../Colors/common-colors.scss';
+.playButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%;
+  padding: 12px;
+  background-color: $primary-color;
+  border-radius: 50%;
+}
+
+.playButton:hover {
+  cursor: pointer;
+}

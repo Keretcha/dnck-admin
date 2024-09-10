@@ -1,0 +1,54 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
+.playerWrapper {
+  padding: 8px 8px 16px 8px;
+  border-radius: 12px 12px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 87px;
+}
+.dark {
+  background-color: $primary-white;
+  color: $primary-black;
+}
+
+.light {
+  background-color: $primary-black;
+  color: $primary-white;
+}
+.playerImage {
+  border-radius: 8px;
+}
+.playerName {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.songName {
+  font-size: 20px;
+}
+.artistName {
+  font-size: 14px;
+  color: #838383;
+}
+.musicPlayer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.textWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .songName {
+    font-size: 14px;
+  }
+  .artistName {
+    font-size: 10px;
+  }
+}

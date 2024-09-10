@@ -1,0 +1,17 @@
+@import '../../../Colors/common-colors.scss';
+@import '../../../Colors/dark-colors.scss';
+@import '../../../Colors/light-colors.scss';
+@import '/app/Colors/admin-colors.scss';
+
+.dropdownButtonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+  width: fit-content;
+  border-radius: 12px;
+  position: absolute;
+  min-width: 153px;
+  max-width: 100%;
+  background-color: $admin-primary-black;
+}
