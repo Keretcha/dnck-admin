@@ -5,11 +5,11 @@
 .button {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 8px 16px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   cursor: pointer;
-  line-height: 19px;
 }
 
 .button:hover {

@@ -42,3 +42,11 @@ export const HitsItems: HitsCardItemsInterface[] = [
     artistName: 'Asap Rocky',
   },
 ];
+
+export const ArtistItems: HitsCardItemsInterface[] = [
+  {
+    albumName: 'America,Los Angeles',
+    backgroundImage: 'url(/images/drip.png)',
+    artistName: 'Asap Rocky',
+  },
+];

@@ -3,6 +3,7 @@ import { NextFont } from 'next/dist/compiled/@next/font';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
+import './Styles/ant.table.scss';
 
 const inter: NextFont = Inter({
   subsets: ['latin'],
@@ -23,9 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="content">
-          <AdminHeader>{children}</AdminHeader>
-        </div>
+        <AdminHeader>{children}</AdminHeader>
       </body>
     </html>
   );

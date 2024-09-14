@@ -1,0 +1,62 @@
+@import '../Colors/common-colors.scss';
+@import '../Colors/dark-colors.scss';
+@import '../Colors/light-colors.scss';
+@import '../Colors/admin-colors.scss';
+
+.ant-table-content table {
+  background-color: $admin-background !important;
+  color: $primary-white;
+}
+
+thead {
+  border: 1px solid $background-color-dark-mode !important;
+}
+
+.ant-table-cell {
+  color: $primary-white !important;
+  background-color: $admin-background !important;
+  border-bottom: 1px solid $disable-stroke-dark !important;
+}
+
+.ant-table-content tr {
+  border: none !important;
+}
+
+.ant-table-content tr:hover td {
+  background-color: $admin-third !important;
+}
+
+.ant-table {
+  border: 1px solid $disable-stroke-dark !important;
+}
+
+.ant-dropdown-menu {
+  background-color: $admin-third !important;
+}
+
+.ant-dropdown-menu-title-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $primary-white;
+}
+
+.ant-btn {
+  background-color: $admin-hover !important;
+  border: none;
+  display: none;
+}
+
+tr:hover .ant-btn {
+  display: flex;
+}
+
+.ant-btn :hover {
+  background-color: $admin-hover;
+}
+.Text_secondaryTextSmall__XGypr {
+  color: red;
+}
+.Text_secondaryTextSmall__XGypr .whiteText {
+  color: antiquewhite;
+}

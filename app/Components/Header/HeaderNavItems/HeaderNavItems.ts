@@ -9,7 +9,7 @@ export const headerNavItems: NavItemPropsInterface[] = [
   },
   {
     icon: IconNameEnum.Microphone,
-    href: '/artists',
+    href: '/artist',
     title: 'Artists',
   },
   {

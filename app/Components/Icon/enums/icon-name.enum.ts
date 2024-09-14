@@ -31,4 +31,6 @@ export enum IconNameEnum {
   AdminPlaylist = 'admin-playlist',
   UsersProfile = 'users-profile',
   Microphone = 'microphone-artist',
+  EditArtist = 'editartist',
+  Delete = 'trash',
 }

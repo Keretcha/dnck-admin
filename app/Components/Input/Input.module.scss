@@ -1,10 +1,11 @@
 @import '../../Colors/light-colors.scss';
 @import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
 
 .inputWrapper {
   display: flex;
   align-items: center;
-  border: 1px solid $disable-stroke-white;
+  border: 1px solid $disable-stroke-dark;
   padding: 12px 24px;
   font-size: 14px;
   font-weight: 400;
@@ -12,6 +13,7 @@
   border-radius: 12px;
   gap: 4px;
 }
+
 .input {
   display: flex;
   border: none;
