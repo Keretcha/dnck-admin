@@ -1,12 +1,11 @@
-import AlbumCards from '../../Components/AlbumCards/AlbumCards';
-import AlbumItems from '../../Components/AlbumItems/AlbumItems';
-import ContentHeading from '../../Components/ContentHeading/ContentHeading';
-import { HitsItems } from '../../Components/HitsCard/HitsItems/HitsItems';
-import HitsCards from '../../Components/HitsCards/HitsCards';
-// import { MainPageType } from '../Components/MainPage/types/main-Page.type';
+import AlbumCards from '../Components/AlbumCards/AlbumCards';
+import AlbumItems from '../Components/AlbumItems/AlbumItems';
+import ContentHeading from '../Components/ContentHeading/ContentHeading';
+import { HitsItems } from '../Components/HitsCard/HitsItems/HitsItems';
+import HitsCards from '../Components/HitsCards/HitsCards';
 import styles from './page.module.scss';
 
-export default function MainPage(): JSX.Element {
+export default function Home(): JSX.Element {
   return (
     <div className="container">
       <div className={styles.pageContent}>

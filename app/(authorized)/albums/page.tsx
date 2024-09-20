@@ -1,39 +1,31 @@
 'use client';
-import axios, { AxiosResponse } from 'axios';
-import router from 'next/router';
-import { useEffect, useState } from 'react';
-import AlbumCards from '../../Components/AlbumCards/AlbumCards';
-import { AlbumCardItemsInterface } from '@/app/Components/AlbumCard/interfaces/album-card-items.interface';
+
+import useSWR from 'swr';
+import { AlbumInterface } from './interfaces/albums.interfaces';
+import { TableDataType } from './interfaces/track.interface';
+import AlbumControlPage from '@/app/Components/Tables/albums/albumControl';
+import { fetcher } from '@/app/api/fetcher';
 
 export default function Home(): JSX.Element {
-  const [albums, setAlbums] = useState<AlbumCardItemsInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data: albums } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
 
-  useEffect(() => {
-    const fetchAlbums = async (): Promise<void> => {
-      try {
-        const response: AxiosResponse<AlbumCardItemsInterface[]> =
-          await axios.get('http://10.10.51.20:3000/albums');
-        setAlbums(response.data);
-        localStorage.setItem('response.data', JSON.stringify(response.data));
-        router.push('/uploaded');
-      } catch (err) {
-        console.error('Cannot load this page', err);
-        setError('An error occurred while fetching albums.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAlbums();
-  }, []);
+  const tableData: TableDataType[] = albums
+    ? albums.map((album, index) => {
+        console.log(album);
+        return {
+          key: index.toString(),
+          name: album.artists[0]?.name || 'Unknown Artist',
+          musics: album.tracks?.length || 0, // Number of tracks
+          albums: album.name,
+        };
+      })
+    : [];
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  console.log(tableData);
 
   return (
     <div>
-      <AlbumCards items={albums} />
+      <AlbumControlPage data={tableData} />
     </div>
   );
 }

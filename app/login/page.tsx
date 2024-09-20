@@ -1,55 +1,51 @@
 'use client';
+
 import axios, { AxiosResponse } from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FC } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../Components/Button/Button';
 import { ButtonTypeEnum } from '../Components/Button/enums/button-type.enum';
 import Heading from '../Components/Heading/Heading';
 import { HeadingTypeEnum } from '../Components/Heading/enums/heading-type.enum';
-import Text from '../Components/Text/Text';
-import { TextHtmlTypeEnum } from '../Components/Text/enums/text-html-type.enum';
-import { TextTypeEnum } from '../Components/Text/enums/text-type.enum';
 import styles from './Authorization.module.scss';
-import { AuthorizationType } from './types/authorization.type';
+import { setCookie } from '@/helpers/cookies';
 
-const Authorization: AuthorizationType = () => {
+const LoginForm: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const router: AppRouterInstance = useRouter();
 
-  const onSubmit = async (values: object): Promise<void> => {
+  const onSubmit = async (values: FieldValues): Promise<void> => {
+    // TODO: Refactor This Call To Axios Config
     try {
       const response: AxiosResponse = await axios.post(
         'http://10.10.51.20:3000/auth/login',
         values,
       );
       const { accessToken } = response.data;
-      // const token: string | null = localStorage.getItem(accessToken);
 
-      // if (token) {
-      //   router.push('/mainPage');
-      // }
       if (accessToken) {
-        localStorage.setItem('accessToken', accessToken);
+        setCookie('accessToken', accessToken, 60);
         console.log('User logged in successfully');
-        router.push('/mainPage');
+        router.push('/');
       } else {
-        alert('sworad wera tu ar ici nu dadzvrebi ');
+        alert('password is not correct');
       }
     } catch (err) {
-      console.error('Login failed', err);
+      alert('Login failed');
     }
   };
 
   return (
-    <div className="container">
-      <div className={styles.content}>
+    <div className={`${styles.container} ${styles.darkContainer}`}>
+      <div className={`${styles.content} ${styles.darkContent}`}>
         <div className={styles.test}>
           <div className={styles.image}>
             <Image
@@ -57,6 +53,7 @@ const Authorization: AuthorizationType = () => {
               alt={'brand'}
               width={644}
               height={575}
+              className={styles.image}
             />
           </div>
           <div className={styles.form}>
@@ -91,7 +88,7 @@ const Authorization: AuthorizationType = () => {
                   {...register('password', {
                     required: 'Password is required',
                   })}
-                  className={styles.authorizationInput}
+                  className={`${styles.authorizationInput} ${styles.darkAuthorizationInput}`}
                   placeholder="Enter Your Password"
                 />
                 {errors.password && (
@@ -113,16 +110,6 @@ const Authorization: AuthorizationType = () => {
                 >
                   Log In
                 </Button>
-                <Text
-                  className={styles.signUpContainer}
-                  htmlType={TextHtmlTypeEnum.Span}
-                  type={TextTypeEnum.PrimaryTextLarge}
-                >
-                  New to DCNK?
-                  <Link className={styles.signUp} href={'/signUp'}>
-                    Sign up
-                  </Link>
-                </Text>
               </div>
             </form>
           </div>
@@ -132,4 +119,4 @@ const Authorization: AuthorizationType = () => {
   );
 };
 
-export default Authorization;
+export default LoginForm;

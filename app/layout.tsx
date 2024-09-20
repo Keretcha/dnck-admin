@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { NextFont } from 'next/dist/compiled/@next/font';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import AdminHeader from './Components/AdminHeader/AdminHeader';
 import './Styles/ant.table.scss';
+import RecoilWrapper from './Components/RecoilWrapper/RecoilWrapper';
 
 const inter: NextFont = Inter({
   subsets: ['latin'],
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AdminHeader>{children}</AdminHeader>
+        <RecoilWrapper>{children}</RecoilWrapper>
       </body>
     </html>
   );

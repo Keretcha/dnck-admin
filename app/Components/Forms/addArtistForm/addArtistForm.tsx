@@ -19,7 +19,7 @@ const AddArtistForm = (): JSX.Element => {
     try {
       await axios.post('http://10.10.51.20:3000/artists', values);
       console.log();
-      router.push('/uploaded');
+      router.push('/uploaded/artistUploaded');
     } catch (err) {
       console.error('Can not load this page', err);
     }

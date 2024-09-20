@@ -24,7 +24,6 @@ const SignUp: SignUpTypes = () => {
 
   const password: string = watch('password');
   const rePassword: string = watch('rePassword');
-
   const onSubmit = async (values: object): Promise<void> => {
     if (password !== rePassword) {
       setError('password', {});

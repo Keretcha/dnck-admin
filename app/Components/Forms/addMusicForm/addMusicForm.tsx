@@ -2,7 +2,7 @@
 // import Link from 'next/link';
 import axios from 'axios';
 import router from 'next/router';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addMusicForm.module.scss';
@@ -10,16 +10,16 @@ import styles from './addMusicForm.module.scss';
 const AddMusicForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async (values: object): Promise<void> => {
-    'name';
-    'uploadAlbumCover';
-    'description';
+  const onSubmit = async (values: FieldValues): Promise<void> => {
+    const data: FormData = new FormData();
 
-    console.log(values);
+    data.append('name', values.name);
+    data.append('music', values.music[0]);
+    data.append('description', values.description[0]);
+
     try {
-      await axios.post('http://10.10.51.20:3000/artists', values);
-      console.log();
-      router.push('/uploaded');
+      await axios.post('https://back.dnck.ge/musics', data);
+      router.push('/uploaded/musicUploaded');
     } catch (err) {
       console.error('Can not load this page', err);
     }
@@ -42,7 +42,7 @@ const AddMusicForm = (): JSX.Element => {
           <label htmlFor="">Upload Music File</label>
           <input
             type="file"
-            {...register('uploadAlbumCover', {
+            {...register('music', {
               required: true,
             })}
             className={styles.bigInput}
@@ -52,7 +52,7 @@ const AddMusicForm = (): JSX.Element => {
         <div className={styles.inputs}>
           <label>Music Description</label>
           <input
-            {...register('name', {
+            {...register('description', {
               required: true,
               maxLength: 16,
             })}

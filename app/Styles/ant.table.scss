@@ -44,11 +44,7 @@ thead {
 .ant-btn {
   background-color: $admin-hover !important;
   border: none;
-  display: none;
-}
-
-tr:hover .ant-btn {
-  display: flex;
+  width: 14px;
 }
 
 .ant-btn :hover {

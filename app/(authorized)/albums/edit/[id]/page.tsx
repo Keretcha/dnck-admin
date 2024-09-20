@@ -1,18 +1,26 @@
 'use client';
 import axios, { AxiosResponse } from 'axios';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import Button from '../../Button/Button';
-import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
-import styles from './addAlbumForm.module.scss';
-import { getCookie, setCookie } from '@/helpers/cookies'; // Adjust import if necessary
+import useSWR from 'swr';
+import { AlbumInterface } from '../../interfaces/albums.interfaces';
+import styles from './page.module.scss';
+import Button from '@/app/Components/Button/Button';
+import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
+import { fetcher } from '@/app/api/fetcher';
+import { getCookie } from '@/helpers/cookies'; // Adjust import if necessary
 
-const AddAlbumForm = (): JSX.Element => {
-  const { register, handleSubmit } = useForm();
-  const router: AppRouterInstance = useRouter();
+const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
+  const { register, handleSubmit, reset } = useForm();
+  const { data } = useSWR<AlbumInterface>(
+    `/albums/${props.params.id}`,
+    fetcher,
+  );
+
+  console.log(data);
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
+    console.log('here');
     const data: FormData = new FormData();
 
     data.append('name', values.name);
@@ -21,29 +29,30 @@ const AddAlbumForm = (): JSX.Element => {
 
     const token: string | null = getCookie('accessToken');
 
-    if (!token) {
-      console.error('No access token found');
-      return;
-    }
+    console.log(token);
 
-    try {
-      const response: AxiosResponse = await axios.post(
-        'http://10.10.51.20:3000/albums',
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    const response: AxiosResponse = await axios.put(
+      `https://back.dnck.ge/albums/${props.params.id}`,
+      data,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-
-      // const { accessToken } = response.data;
-      // setCookie('accessToken', accessToken, 24);
-      router.push('/uploaded/albumUploaded');
-    } catch (err) {
-      console.error('Failed to upload album', err);
-    }
+      },
+    );
+    console.log(response.data);
   };
+
+  useEffect(() => {
+    if (data) {
+      console.log('here');
+      reset({
+        name: data.name,
+        releaseDate: data.releaseDate,
+      });
+    }
+  }, [data]);
 
   return (
     <div className={styles.addArtist}>
@@ -60,7 +69,7 @@ const AddAlbumForm = (): JSX.Element => {
           <label>Release Date</label>
           <input
             type="date"
-            {...register('releaseDate', { required: true })}
+            {...register('releaseDate')}
             className={styles.smallInput}
             placeholder="DD/MM/YYYY"
           />
@@ -69,7 +78,7 @@ const AddAlbumForm = (): JSX.Element => {
           <label>Upload Album Cover</label>
           <input
             type="file"
-            {...register('file', { required: true })}
+            {...register('file')}
             className={styles.bigInput}
           />
         </div>
@@ -77,7 +86,6 @@ const AddAlbumForm = (): JSX.Element => {
           className={styles.uploadButton}
           htmlType="submit"
           type={ButtonTypeEnum.Primary}
-          href="/uploaded"
         >
           Upload
         </Button>

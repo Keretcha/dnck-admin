@@ -5,6 +5,6 @@ export interface HitsCardItemsInterface {
   dropDownItems?: DropDownItemsInterface[];
   backgroundImage: string;
   artistName: string;
-  albumName: string;
+  name: string;
   button?: PlayButtonPropsInterface[];
 }

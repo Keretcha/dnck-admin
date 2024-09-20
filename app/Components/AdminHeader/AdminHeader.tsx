@@ -33,7 +33,9 @@ const AdminHeader = (props: AdminHeaderPropsInterface): JSX.Element => {
         </div>
       </div>
       <div className={styles.header}>
-        <Header />
+        <div>
+          <Header />
+        </div>
         <div className={styles.content}>{props.children}</div>
       </div>
     </div>
