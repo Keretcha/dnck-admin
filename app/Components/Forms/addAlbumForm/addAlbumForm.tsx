@@ -6,7 +6,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addAlbumForm.module.scss';
-import { getCookie, setCookie } from '@/helpers/cookies'; // Adjust import if necessary
+import { getCookie } from '@/helpers/cookies'; // Adjust import if necessary
 
 const AddAlbumForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
@@ -28,7 +28,7 @@ const AddAlbumForm = (): JSX.Element => {
 
     try {
       const response: AxiosResponse = await axios.post(
-        'http://10.10.51.20:3000/albums',
+        'https://back.dnck.ge/albums',
         data,
         {
           headers: {
@@ -36,9 +36,8 @@ const AddAlbumForm = (): JSX.Element => {
           },
         },
       );
+      console.log(response.data);
 
-      // const { accessToken } = response.data;
-      // setCookie('accessToken', accessToken, 24);
       router.push('/uploaded/albumUploaded');
     } catch (err) {
       console.error('Failed to upload album', err);
