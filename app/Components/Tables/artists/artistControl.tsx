@@ -1,4 +1,5 @@
 import { Table, Dropdown, Menu, Button, message } from 'antd';
+import { ColumnType } from 'antd/es/table/interface';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Icon from '../../Icon/Icon';
@@ -9,7 +10,7 @@ import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.int
 import { fetcher } from '@/app/api/fetcher';
 
 const ArtistControlTable: React.FC = () => {
-  const { data: initialData } = useSWR<ArtistInterface[]>(`/artists`, fetcher);
+  const { data: initialData } = useSWR<ArtistInterface[]>('/artists', fetcher);
   const [artists, setArtists] = useState<ArtistInterface[]>(initialData || []);
 
   useEffect(() => {
@@ -30,15 +31,15 @@ const ArtistControlTable: React.FC = () => {
     }
   };
 
-  const menu = (artistId: number): React.JSX.Element => (
+  const menu = (artistId: number): React.ReactElement => (
     <Menu>
-      <Menu.Item className={styles.menuItem} key="1">
+      <Menu.Item className={styles.menuItem} key="edit">
         <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
         Edit Artist
       </Menu.Item>
       <Menu.Item
         className={styles.menuItemDelete}
-        key="2"
+        key="delete"
         onClick={() => handleDelete(artistId)}
       >
         <Icon name={IconNameEnum.Delete} width={24} height={24} />
@@ -47,18 +48,23 @@ const ArtistControlTable: React.FC = () => {
     </Menu>
   );
 
-  const columns: any = [
+  const columns: ColumnType<ArtistInterface>[] = [
     {
       title: 'Name',
       dataIndex: 'name',
       render: (text: string, record: ArtistInterface) => (
-        <HitsItemDisplay item={record} />
+        <HitsItemDisplay
+          item={{
+            artistName: record.firstName + ' ' + record.lastName,
+            backgroundImage: record.albums[0].history?.location,
+          }}
+        />
       ),
     },
     {
       title: '',
       key: 'action',
-      render: (_: any, record: ArtistInterface) => (
+      render: (_, record: ArtistInterface) => (
         <Dropdown
           overlay={menu(record.id)}
           trigger={['click']}

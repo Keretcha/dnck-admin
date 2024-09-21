@@ -17,7 +17,7 @@ const AddArtistForm = (): JSX.Element => {
     'biography';
     console.log(values);
     try {
-      await axios.post('http://10.10.51.20:3000/artists', values);
+      await axios.post('https://back.dnck.ge/artists', values);
       console.log();
       router.push('/uploaded/artistUploaded');
     } catch (err) {

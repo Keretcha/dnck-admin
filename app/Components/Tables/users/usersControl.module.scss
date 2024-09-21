@@ -1,0 +1,37 @@
+@import '../../../Colors/common-colors.scss';
+@import '../../../Colors/light-colors.scss';
+@import '../../../Colors/dark-colors.scss';
+@import '../../../Colors/admin-colors.scss';
+
+.edit {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  width: 100%;
+}
+.edit:hover {
+  background-color: $admin-third;
+  border-radius: 12px;
+}
+
+.block {
+  gap: 4px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 12px 16px;
+  width: 100%;
+}
+.block:hover {
+  background-color: $primary-white;
+  border-radius: 12px;
+}
+.load {
+    font-size: 36px;
+    color: $primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

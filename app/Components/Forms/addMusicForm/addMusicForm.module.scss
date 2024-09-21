@@ -1,12 +1,13 @@
-@import '../../../Colors/common-colors.scss';
-@import '../../../Colors/light-colors.scss';
-@import '../../../Colors/dark-colors.scss';
 @import '../../../Colors/admin-colors.scss';
+@import '../../../Colors/common-colors.scss';
+@import '../../../Colors/dark-colors.scss';
+@import '../../../Colors/light-colors.scss';
 
 .inputs {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  color: $primary-white;
 }
 .forms {
   display: flex;
@@ -20,6 +21,7 @@
   outline: none;
   border: none;
   background-color: $admin-third;
+  color: $primary-white;
 }
 .bigInput {
   padding: 24px;

@@ -26,7 +26,7 @@ const LoginForm: FC = () => {
     // TODO: Refactor This Call To Axios Config
     try {
       const response: AxiosResponse = await axios.post(
-        'http://10.10.51.20:3000/auth/login',
+        'https://back.dnck.ge/auth/login',
         values,
       );
       const { accessToken } = response.data;

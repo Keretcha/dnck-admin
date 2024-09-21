@@ -15,7 +15,7 @@ export default function Home(): JSX.Element {
         return {
           key: index.toString(),
           name: album.artists[0]?.name || 'Unknown Artist',
-          musics: album.tracks?.length || 0, // Number of tracks
+          musics: album.musics?.length || 0,
           albums: album.name,
         };
       })

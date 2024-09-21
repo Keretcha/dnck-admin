@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
-import { AlbumInterface } from '../../interfaces/albums.interfaces';
 import styles from './page.module.scss';
+import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
 import { fetcher } from '@/app/api/fetcher';
@@ -50,38 +50,40 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   useEffect(() => {
     if (data) {
       reset({
-        name: data.name,
-        releaseDate: data.releaseDate,
+        email: data.name,
+        password: data,
       });
     }
   }, [data]);
 
   return (
     <div className={styles.addArtist}>
+      <h1>Change Password</h1>
       <form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputs}>
-          <label>Album Name</label>
+          <label>User Name</label>
           <input
             {...register('name', { maxLength: 32 })}
             className={styles.smallInput}
-            placeholder="Exp: DAMN."
+            placeholder="User Name."
           />
         </div>
         <div className={styles.inputs}>
-          <label>Release Date</label>
+          <label>New Password</label>
           <input
-            type="date"
-            {...register('releaseDate')}
+            type="password"
+            {...register('password')}
             className={styles.smallInput}
-            placeholder="DD/MM/YYYY"
+            placeholder="Password"
           />
         </div>
         <div className={styles.inputs}>
-          <label>Upload Album Cover</label>
+          <label>Re-enter Password</label>
           <input
-            type="file"
-            {...register('file')}
-            className={styles.bigInput}
+            type="password"
+            {...register('password')}
+            className={styles.smallInput}
+            placeholder="Re-enter Password"
           />
         </div>
         <Button

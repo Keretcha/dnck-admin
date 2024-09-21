@@ -6,9 +6,16 @@ import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addMusicForm.module.scss';
+import { getCookie } from '@/helpers/cookies';
 
 const AddMusicForm = (): JSX.Element => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  console.log(errors, 'erer');
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
@@ -17,8 +24,14 @@ const AddMusicForm = (): JSX.Element => {
     data.append('music', values.music[0]);
     data.append('description', values.description[0]);
 
+    console.log(getCookie('accessToken'), 'access');
+
     try {
-      await axios.post('https://back.dnck.ge/musics', data);
+      await axios.post('https://back.dnck.ge/musics', data, {
+        headers: {
+          Authorization: 'Bearer ' + getCookie('accessToken'),
+        },
+      });
       router.push('/uploaded/musicUploaded');
     } catch (err) {
       console.error('Can not load this page', err);
@@ -31,8 +44,8 @@ const AddMusicForm = (): JSX.Element => {
           <label>Music Name</label>
           <input
             {...register('name', {
-              required: true,
-              maxLength: 16,
+              // required: true,
+              maxLength: 666,
             })}
             className={styles.smallInput}
             placeholder="EXP: Dagdagani-yofierebis autaneli sidzulvili"
@@ -43,7 +56,7 @@ const AddMusicForm = (): JSX.Element => {
           <input
             type="file"
             {...register('music', {
-              required: true,
+              // required: true,
             })}
             className={styles.bigInput}
             placeholder="upload song"
@@ -53,8 +66,8 @@ const AddMusicForm = (): JSX.Element => {
           <label>Music Description</label>
           <input
             {...register('description', {
-              required: true,
-              maxLength: 16,
+              // required: true,
+              maxLength: 666,
             })}
             className={styles.smallInput}
             placeholder="Description"

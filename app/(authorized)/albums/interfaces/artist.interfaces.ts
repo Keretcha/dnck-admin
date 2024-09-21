@@ -1,7 +1,10 @@
+import { AlbumInterface } from './albums.interfaces';
+import { MusicInterface } from './track.interface';
+
 export interface ArtistInterface {
-  id(id: any): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | (() => import("react").ReactElement) | undefined;
-  albums: any;
-  musics: any;
+  id: number;
+  albums: AlbumInterface[];
+  musics: MusicInterface[];
   name: string;
   firstName: string;
   lastName: string;

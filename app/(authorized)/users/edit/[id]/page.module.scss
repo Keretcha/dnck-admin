@@ -1,0 +1,60 @@
+@import '../../../../Colors/common-colors.scss';
+@import '../../../../Colors/light-colors.scss';
+@import '../../../../Colors/dark-colors.scss';
+@import '../../../../Colors/admin-colors.scss';
+
+.addArtist {
+  color: $primary-white;
+  display: flex;
+  width: 100%;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: $primary-white;
+  //   align-items: center;
+  width: 100%;
+  max-width: 360px;
+}
+.forms {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 26px;
+  align-items: center;
+  font-size: 14px;
+  width: 100%;
+  max-width: 360px;
+}
+.smallInput {
+  width: 360px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  background-color: $admin-third;
+  color: $primary-white;
+  width: 100%;
+  max-width: 500px;
+}
+.bigInput {
+  padding: 24px;
+  border-radius: 12px;
+  outline: none;
+  border: none;
+  background-color: $admin-third;
+  color: $primary-white;
+  width: 100%;
+  max-width: 500px;
+}
+.uploadButton {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+}

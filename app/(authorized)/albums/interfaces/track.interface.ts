@@ -1,4 +1,4 @@
-export interface TrackInterface {
+export interface MusicInterface {
   id: number;
   title: string;
   duration: number;

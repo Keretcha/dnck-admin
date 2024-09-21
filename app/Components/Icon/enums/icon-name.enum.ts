@@ -33,4 +33,5 @@ export enum IconNameEnum {
   Microphone = 'microphone-artist',
   EditArtist = 'editartist',
   Delete = 'trash',
+  Block = 'Block',
 }

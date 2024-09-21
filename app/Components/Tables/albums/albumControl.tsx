@@ -2,6 +2,8 @@
 
 import type { TableColumnsType } from 'antd';
 import { Table, Dropdown, Menu, Button, message } from 'antd';
+import axios from 'axios';
+import Link from 'next/link';
 import React from 'react';
 import useSWR from 'swr';
 import Icon from '../../Icon/Icon';
@@ -12,16 +14,15 @@ import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import styles from './albumControl.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
+import { TableDataType } from '@/app/(authorized)/albums/interfaces/track.interface';
 import { fetcher } from '@/app/api/fetcher';
-import axios from 'axios';
-import Link from 'next/link';
 
 const AlbumControlPage: React.FC = () => {
   const { data: albums, mutate } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
 
   const handleDelete = async (albumId: number): Promise<void> => {
     try {
-      await axios.delete(`http://10.10.51.20:3000/albums/${albumId}`, {
+      await axios.delete(`https://back.dnck.ge/albums/${albumId}`, {
         method: 'DELETE',
       });
 
@@ -41,7 +42,7 @@ const AlbumControlPage: React.FC = () => {
   const menu = (albumId: number): React.JSX.Element => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
-        <Link href={}>
+        <Link href={`/albums/edit/${albumId}`}>
           <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
           Edit Artist
         </Link>
@@ -66,13 +67,13 @@ const AlbumControlPage: React.FC = () => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text, record) => {
-        console.log(record, 'rec');
+      render: (text: string, record: AlbumInterface): React.JSX.Element => {
+        // console.log(record, 'rec');
         return (
           <HitsItemDisplay
             item={{
               artistName: record?.artists?.reduce((acc, curr) => {
-                const fullName = curr.firstName + ' ' + curr.lastName;
+                const fullName: string = curr.firstName + ' ' + curr.lastName;
                 return (acc += fullName);
               }, ''),
               name: record.name,
@@ -94,27 +95,30 @@ const AlbumControlPage: React.FC = () => {
       title: '',
       key: 'action',
       width: 20,
-      render: (_, record) => (
-        <Dropdown
-          overlay={menu(record.id)}
-          trigger={['click']}
-          placement="bottomRight"
-        >
-          <Button
-            icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-            className={styles.dropdownButton}
-          />
-        </Dropdown>
-      ),
+      render: (_, record) => {
+        console.log(record.id);
+        return (
+          <Dropdown
+            overlay={menu(record.id)}
+            trigger={['click']}
+            placement="bottomRight"
+          >
+            <Button
+              icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
+              className={styles.dropdownButton}
+            />
+          </Dropdown>
+        );
+      },
     },
   ];
 
-  const data: any = albums
+  const data: TableDataType[] = albums
     ? albums?.map((album, index) => ({
         key: index.toString(),
         id: album.id,
         name: album.name,
-        musics: album.tracks?.length || 0,
+        musics: album.musics?.length || 0,
         history: album.history,
         artists: album.artists,
       }))

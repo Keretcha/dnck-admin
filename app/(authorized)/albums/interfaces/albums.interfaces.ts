@@ -1,10 +1,9 @@
 import { ArtistInterface } from './artist.interfaces';
-import { TrackInterface } from './track.interface';
+import { MusicInterface } from './track.interface';
 
 export interface AlbumInterface {
-  history: any;
-  accessToken(arg0: string, accessToken: any, arg2: number): unknown;
-  tracks: TrackInterface[];
+  history: { location: string };
+  musics: MusicInterface[];
   id: number;
   name: string;
   artists: ArtistInterface[];
