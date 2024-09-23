@@ -15,7 +15,7 @@ const Upload = (props: UploadButtonInterfaces): JSX.Element => {
         <Link href={props.href}>
           <Button type={ButtonTypeEnum.Primary} className={styles.uploadButton}>
             {props.children}
-            <Icon name={IconNameEnum.WhitePlus} width={24} height={24} />
+            <Icon name={props.icon} width={24} height={24} />
           </Button>
         </Link>
       </div>

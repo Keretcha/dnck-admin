@@ -50,7 +50,6 @@ const AddArtistForm = (): JSX.Element => {
         <label>Last Name</label>
         <input
           {...register('lastName', {
-            required: true,
             maxLength: 16,
           })}
           className={styles.smallInput}

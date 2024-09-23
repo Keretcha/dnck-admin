@@ -91,7 +91,9 @@ const ArtistControlTable: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Upload href={'/createArtist'}>Upload Artist</Upload>
+      <Upload href={'/createArtist'} icon={IconNameEnum.WhitePlus}>
+        Upload Artist
+      </Upload>
       <Table columns={columns} dataSource={artists} pagination={false} />
     </div>
   );

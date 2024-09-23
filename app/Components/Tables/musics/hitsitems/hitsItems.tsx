@@ -10,6 +10,8 @@ const HitsItemDisplay: React.FC<{ item: HitsCardItemsInterface }> = ({
         backgroundImage: `url(${item.backgroundImage})`,
         width: 50,
         height: 50,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover'
       }}
     ></div>
     <div>

@@ -93,7 +93,9 @@ const MusicControlPage: React.FC<MusicControlPageProps> = () => {
 
   return (
     <div className={styles.container}>
-      <Upload href={'/addMusic'}>Upload Music</Upload>
+      <Upload href={'/addMusic'} icon={IconNameEnum.WhitePlus}>
+        Upload Music
+      </Upload>
       <Table columns={columns} dataSource={data} pagination={false} />
     </div>
   );

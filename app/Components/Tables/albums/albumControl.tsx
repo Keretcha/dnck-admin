@@ -31,7 +31,8 @@ const AlbumControlPage: React.FC = () => {
       if (initialData) {
         const updatedAlbums: AlbumInterface[] = initialData.filter(
           (album) => album.id !== albumId,
-          alert        );
+          alert,
+        );
         mutate(updatedAlbums, false);
       }
 
@@ -109,7 +110,7 @@ const AlbumControlPage: React.FC = () => {
   ];
 
   const data: TableDataType[] = initialData
-    ? initialData.map((album) => ({
+    ? initialData?.map?.((album) => ({
         key: album.id,
         id: album.id,
         name: album.name,
@@ -121,7 +122,9 @@ const AlbumControlPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Upload href={'/createAlbum'}>Upload Albums</Upload>
+      <Upload href={'/createAlbum'} icon={IconNameEnum.WhitePlus}>
+        Upload Albums
+      </Upload>
       <Table columns={columns} dataSource={data} pagination={false} />
     </div>
   );
