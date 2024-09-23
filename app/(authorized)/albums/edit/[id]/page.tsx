@@ -17,10 +17,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     fetcher,
   );
 
-  console.log(data);
-
   const onSubmit = async (values: FieldValues): Promise<void> => {
-    console.log('here');
     const data: FormData = new FormData();
 
     data.append('name', values.name);

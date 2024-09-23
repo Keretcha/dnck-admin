@@ -2,9 +2,8 @@
 
 import type { TableColumnsType } from 'antd';
 import { Table, Dropdown, Menu, Button, message } from 'antd';
-import axios from 'axios';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
@@ -15,21 +14,24 @@ import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import styles from './albumControl.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import { TableDataType } from '@/app/(authorized)/albums/interfaces/track.interface';
+import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
+import Upload from '../../Header/UploadButton/Upload';
 
 const AlbumControlPage: React.FC = () => {
-  const { data: albums, mutate } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
+  const { data: initialData } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
+  const { mutate } = useSWR('/albums', fetcher);
 
   const handleDelete = async (albumId: number): Promise<void> => {
     try {
-      await axios.delete(`https://back.dnck.ge/albums/${albumId}`, {
-        method: 'DELETE',
+      await ApiClient.delete(`/albums/${albumId}`, {}).then(() => {
+        mutate('/albums');
       });
 
-      if (albums) {
-        const updatedAlbums: AlbumInterface[] = albums.filter(
+      if (initialData) {
+        const updatedAlbums: AlbumInterface[] = initialData.filter(
           (album) => album.id !== albumId,
-        );
+          alert        );
         mutate(updatedAlbums, false);
       }
 
@@ -42,23 +44,21 @@ const AlbumControlPage: React.FC = () => {
   const menu = (albumId: number): React.JSX.Element => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
-        <Link href={`/albums/edit/${albumId}`}>
+        <Link href={`/albums/edit/${albumId}`} className={styles.edit}>
           <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
-          Edit Artist
+          Edit Album
         </Link>
       </Menu.Item>
-      <Menu.Item
-        className={styles.menuItemDelete}
-        key="2"
-        onClick={() => handleDelete(albumId)}
-      >
-        <Icon name={IconNameEnum.Delete} width={24} height={24} />
-        <Text
-          htmlType={TextHtmlTypeEnum.Span}
-          type={TextTypeEnum.SecondaryTextSmall}
-        >
-          Delete
-        </Text>
+      <Menu.Item key="2" onClick={() => handleDelete(albumId)}>
+        <div className={styles.menuItemDelete}>
+          <Icon name={IconNameEnum.Delete} width={24} height={24} />
+          <Text
+            htmlType={TextHtmlTypeEnum.Span}
+            type={TextTypeEnum.SecondaryTextSmall}
+          >
+            Delete
+          </Text>
+        </div>
       </Menu.Item>
     </Menu>
   );
@@ -68,16 +68,17 @@ const AlbumControlPage: React.FC = () => {
       title: 'Name',
       dataIndex: 'name',
       render: (text: string, record: AlbumInterface): React.JSX.Element => {
-        // console.log(record, 'rec');
+        const artistNames: string =
+          record.artists
+            ?.map((artist) => `${artist.firstName} ${artist.lastName}`)
+            .join(', ') || 'Unknown Artist';
+
         return (
           <HitsItemDisplay
             item={{
-              artistName: record?.artists?.reduce((acc, curr) => {
-                const fullName: string = curr.firstName + ' ' + curr.lastName;
-                return (acc += fullName);
-              }, ''),
+              artistName: artistNames,
               name: record.name,
-              backgroundImage: record?.history?.location,
+              backgroundImage: record.history?.location,
             }}
           />
         );
@@ -86,48 +87,41 @@ const AlbumControlPage: React.FC = () => {
     {
       title: 'Musics',
       dataIndex: 'musics',
-    },
-    {
-      title: 'Albums',
-      dataIndex: 'albums',
+      render: (musics: any[]): number => musics.length,
     },
     {
       title: '',
       key: 'action',
       width: 20,
-      render: (_, record) => {
-        console.log(record.id);
-        return (
-          <Dropdown
-            overlay={menu(record.id)}
-            trigger={['click']}
-            placement="bottomRight"
-          >
-            <Button
-              icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-              className={styles.dropdownButton}
-            />
-          </Dropdown>
-        );
-      },
+      render: (_, record) => (
+        <Dropdown
+          overlay={menu(record.id)}
+          trigger={['click']}
+          placement="bottomRight"
+        >
+          <Button
+            icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
+            className={styles.dropdownButton}
+          />
+        </Dropdown>
+      ),
     },
   ];
 
-  const data: TableDataType[] = albums
-    ? albums?.map((album, index) => ({
-        key: index.toString(),
+  const data: TableDataType[] = initialData
+    ? initialData.map((album) => ({
+        key: album.id,
         id: album.id,
         name: album.name,
-        musics: album.musics?.length || 0,
+        musics: album.musics || [],
         history: album.history,
         artists: album.artists,
       }))
     : [];
 
-  console.log(data, 'aee');
-
   return (
     <div className={styles.container}>
+      <Upload href={'/createAlbum'}>Upload Albums</Upload>
       <Table columns={columns} dataSource={data} pagination={false} />
     </div>
   );

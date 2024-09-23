@@ -10,8 +10,6 @@ const Header: HeaderType = () => {
         <div className={styles.search}>
           <SearchInput />
         </div>
-        <div className={styles.button}></div>
-        <Upload />
       </div>
     </div>
   );

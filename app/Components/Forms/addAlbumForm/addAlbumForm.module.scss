@@ -36,3 +36,27 @@
   justify-content: center;
   width: 100%;
 }
+
+.chooseArtist {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 8px;
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  outline: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background-color: $admin-third;
+  color: $primary-white;
+  background-image: url(/public/icons/arrowDown.svg);
+  background-position: right 10px center;
+  background-size: 26px;
+  cursor: pointer;
+}
+.option {
+  background-color: $admin-third;
+  border-radius: 12px;
+}

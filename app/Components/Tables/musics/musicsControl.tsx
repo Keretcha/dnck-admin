@@ -1,28 +1,52 @@
 'use client';
 import type { TableColumnsType } from 'antd';
-import { Table, Dropdown, Menu, Button } from 'antd';
-import React from 'react';
+import { Table, Dropdown, Button, message, Menu } from 'antd';
+import React, { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import Text from '../../Text/Text';
 import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
-import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import DataType from '../artists/interfaces/artistControl-props.interface';
+import HitsItemDisplay from './hitsitems/hitsItems';
 import styles from './musicsControl.module.scss';
+import { MusicInterface } from '@/app/(authorized)/albums/interfaces/track.interface';
+import { ApiClient } from '@/app/api/api';
+import { fetcher } from '@/app/api/fetcher';
+import Link from 'next/link';
+import Upload from '../../Header/UploadButton/Upload';
 
 interface MusicControlPageProps {
   data: DataType[];
 }
 
-const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
-  const menu: React.JSX.Element = (
+const MusicControlPage: React.FC<MusicControlPageProps> = () => {
+  const { data, mutate } = useSWR<MusicInterface[]>('/musics', fetcher);
+
+  const handleDelete = async (musicId: number): Promise<void> => {
+    try {
+      await ApiClient.delete(`/musics/${musicId}`);
+      mutate();
+      message.success('Music deleted successfully');
+    } catch (error) {
+      message.error('Failed to delete music');
+    }
+  };
+
+  const menu = (musicId: number): React.JSX.Element => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
-        <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
-        Edit Artist
+        <Link href={'/music/edit/${musicId}'}>
+          <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
+          Edit Music
+        </Link>
       </Menu.Item>
-      <Menu.Item className={styles.menuItemDelete} key="2">
+      <Menu.Item
+        onClick={() => handleDelete(musicId)}
+        className={styles.menuItemDelete}
+        key="2"
+      >
         <Icon name={IconNameEnum.Delete} width={24} height={24} />
         <Text
           htmlType={TextHtmlTypeEnum.Span}
@@ -38,22 +62,26 @@ const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text, record) => <HitsItemDisplay item={record.name} />,
-    },
-    {
-      title: 'Musics',
-      dataIndex: 'musics',
-    },
-    {
-      title: 'Albums',
-      dataIndex: 'albums',
+      render: (text, record: MusicInterface) => (
+        <HitsItemDisplay
+          item={{
+            name: record.name,
+            backgroundImage: record?.album?.history?.location,
+            albumName: record.name,
+          }}
+        />
+      ),
     },
     {
       title: '',
       key: 'action',
       width: 20,
-      render: () => (
-        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+      render: (_, record: MusicInterface) => (
+        <Dropdown
+          overlay={menu(record.id)}
+          trigger={['click']}
+          placement="bottomRight"
+        >
           <Button
             icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
             className={styles.dropdownButton}
@@ -65,6 +93,7 @@ const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
 
   return (
     <div className={styles.container}>
+      <Upload href={'/addMusic'}>Upload Music</Upload>
       <Table columns={columns} dataSource={data} pagination={false} />
     </div>
   );

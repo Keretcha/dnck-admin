@@ -20,8 +20,9 @@ const ArtistUploaded = (): JSX.Element => {
           <div className={styles.uploadedText}>
             <Heading type={HeadingTypeEnum.H4}>Artist Uploaded</Heading>
             <Text
+              className={styles.uploadText}
               htmlType={TextHtmlTypeEnum.Span}
-              type={TextTypeEnum.SecondaryTextSmall}
+              type={TextTypeEnum.PrimaryTextLarge}
             >
               Gela Gnolidze Added In Artists
             </Text>

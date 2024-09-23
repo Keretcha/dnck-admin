@@ -6,7 +6,11 @@ const HitsItemDisplay: React.FC<{ item: HitsCardItemsInterface }> = ({
 }) => (
   <div className={styles.container}>
     <div
-      style={{ backgroundImage: item.backgroundImage, width: 50, height: 50 }}
+      style={{
+        backgroundImage: `url(${item.backgroundImage})`,
+        width: 50,
+        height: 50,
+      }}
     ></div>
     <div>
       <div>{item.artistName}</div>

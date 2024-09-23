@@ -34,4 +34,5 @@ export enum IconNameEnum {
   EditArtist = 'editartist',
   Delete = 'trash',
   Block = 'Block',
+  WhitePlus = 'whitePlus',
 }

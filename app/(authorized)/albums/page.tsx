@@ -10,7 +10,7 @@ export default function Home(): JSX.Element {
   const { data: albums } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
 
   const tableData: TableDataType[] = albums
-    ? albums.map((album, index) => {
+    ? albums?.map?.((album, index) => {
         console.log(album);
         return {
           key: index.toString(),

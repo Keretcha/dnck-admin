@@ -2,26 +2,34 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addArtistForm.module.scss';
+import { getCookie } from '@/helpers/cookies';
 
 const AddArtistForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
 
-  const onSubmit = async (values: object): Promise<void> => {
-    'firsName';
-    'lastName';
-    'biography';
-    console.log(values);
+  const onSubmit = async (values: FieldValues): Promise<void> => {
+    const data: FormData = new FormData();
+
+    data.append('firstName', values.firstName);
+    data.append('lastName', values.lastName);
+    data.append('biography', values.biography);
+    data.append('file', values.file[0]);
+
     try {
-      await axios.post('https://back.dnck.ge/artists', values);
-      console.log();
+      await axios.post('https://back.dnck.ge/artists', data, {
+        headers: {
+          Authorization: 'Bearer ' + getCookie('accessToken'),
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       router.push('/uploaded/artistUploaded');
     } catch (err) {
-      console.error('Can not load this page', err);
+      console.error('Cannot load this page', err);
     }
   };
 
@@ -58,6 +66,15 @@ const AddArtistForm = (): JSX.Element => {
           })}
           className={styles.smallInput}
           placeholder="About Artist..."
+        />
+      </div>
+      <div className={styles.inputs}>
+        <label>Artist Image</label>
+        <input
+          type="file"
+          {...register('file')}
+          className={styles.bigInput}
+          placeholder="upload image"
         />
       </div>
       <div>

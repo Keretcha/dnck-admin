@@ -23,10 +23,10 @@ const HitsItemDisplay: React.FC<{ item?: HitsCardItemsInterface }> = ({
 
   return (
     <div className={styles.container}>
-      <div style={backgroundImageStyle}></div>
+      <div style={backgroundImageStyle} className={styles.image}></div>
       <div>
-        <div>{item?.artistName || 'Unknown Artist'}</div>
-        <div>{item?.name || 'Unknown Album'}</div>
+        <div>{item?.name || 'Unknown Artist'}</div>
+        <div>{item?.albumName || 'Unknown Album'}</div>{' '}
       </div>
     </div>
   );

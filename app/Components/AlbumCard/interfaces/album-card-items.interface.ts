@@ -4,7 +4,6 @@ import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.int
 export interface AlbumCardItemsInterface {
   dropDownItems: DropDownItemsInterface[];
   imgUrl: string;
-  artists?: ArtistInterface[];
-  artistName: string;
+  artists: ArtistInterface[];
   title: string;
 }

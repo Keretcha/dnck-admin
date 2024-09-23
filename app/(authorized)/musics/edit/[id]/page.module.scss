@@ -1,18 +1,22 @@
-@import '../../../Colors/common-colors.scss';
-@import '../../../Colors/light-colors.scss';
-@import '../../../Colors/dark-colors.scss';
-@import '../../../Colors/admin-colors.scss';
+@import '../../../../Colors/common-colors.scss';
+@import '../../../../Colors/light-colors.scss';
+@import '../../../../Colors/dark-colors.scss';
+@import '../../../../Colors/admin-colors.scss';
 
 .inputs {
   display: flex;
   flex-direction: column;
   gap: 8px;
   color: $primary-white;
+  align-items: center;
+  width: 100%;
 }
 .forms {
   display: flex;
   flex-flow: column wrap;
-  gap: 16px;
+  gap: 26px;
+  align-items: center;
+  font-size: 24px;
 }
 .smallInput {
   width: 360px;
@@ -22,6 +26,8 @@
   border: none;
   background-color: $admin-third;
   color: $primary-white;
+  width: 100%;
+  max-width: 500px;
 }
 .bigInput {
   padding: 24px;
@@ -29,18 +35,25 @@
   outline: none;
   border: none;
   background-color: $admin-third;
+  color: $primary-white;
+  width: 100%;
+  max-width: 500px;
 }
 .uploadButton {
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 500px;
 }
 .chooseArtist {
   display: flex;
   flex-flow: column wrap;
   gap: 8px;
+  width: 100%;
+  max-width: 500px;
+  align-items: center;
+  color: $primary-white;
 }
-
 .select {
   appearance: none;
   width: 100%;

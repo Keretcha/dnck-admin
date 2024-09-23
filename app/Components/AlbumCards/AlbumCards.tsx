@@ -9,14 +9,13 @@ const AlbumCards: AlbumCardsType = (props: AlbumCardsPropsInterface) => {
       {props.items.map((item, idx) => (
         <AlbumCard
           key={idx}
-          darkMode={false}
           imgUrl={item.imgUrl}
+          darkMode={false}
           artists={item.artists}
           title={item.title}
           dropDownItems={item.dropDownItems}
           image={item.imgUrl}
-          albumName={item.title}
-          artistName={item.artistName}
+          albumName={''}
         />
       ))}
     </div>

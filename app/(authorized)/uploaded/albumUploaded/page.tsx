@@ -21,7 +21,7 @@ const ArtistUploaded = (): JSX.Element => {
             <Heading type={HeadingTypeEnum.H4}>Album Uploaded</Heading>
             <Text
               htmlType={TextHtmlTypeEnum.Span}
-              type={TextTypeEnum.SecondaryTextSmall}
+              type={TextTypeEnum.PrimaryTextLarge}
             >
               Gela Gnolidze Added In Album
             </Text>

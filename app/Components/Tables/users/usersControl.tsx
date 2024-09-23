@@ -1,15 +1,15 @@
-import { message, Menu, Button, TableColumnsType, Dropdown, Table } from 'antd';
-import axios from 'axios';
+import { ApiClient } from '@/app/api/api';
+import { fetcher } from '@/app/api/fetcher';
+import { message, Menu, TableColumnsType, Dropdown, Button, Table } from 'antd';
 import Link from 'next/link';
 import useSWR from 'swr';
-import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
-import Text from '../../Text/Text';
+import Icon from '../../Icon/Icon';
 import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import { UserInterface } from './interfaces/users-control.interfaces';
+import Text from '../../Text/Text';
 import styles from './usersControl.module.scss';
-import { fetcher } from '@/app/api/fetcher';
 
 const UsersTable: React.FC = () => {
   const { data: users = [], mutate } = useSWR<UserInterface[]>(
@@ -17,37 +17,32 @@ const UsersTable: React.FC = () => {
     fetcher,
   );
 
-  const handleDelete = async (userId: number): Promise<void> => {
+  const handleBlock = async (userId: number): Promise<void> => {
+    console.log(`Attempting to block user with ID: ${userId}`);
+
     try {
-      await axios.delete(`https://back.dnck.ge/users/${userId}`);
-
-      if (Array.isArray(users)) {
-        const updatedUsers: UserInterface[] = users.filter(
-          (user) => user.id !== userId,
-        );
-        mutate(updatedUsers, false);
-      }
-
-      message.success('User deleted successfully');
+      const response = await ApiClient.delete(`/users/${userId}`, {}).then(
+        () => {
+          mutate();
+        },
+      );
+      console.log('API response:', response);
     } catch (error) {
-      message.error('Failed to delete user');
+      console.error('Error blocking user:', error);
+      message.error('Failed to block user');
     }
   };
 
-  const menu = (userId: number): React.ReactElement => (
+  const renderMenu = (userId: number): React.ReactElement => (
     <Menu>
-      <Menu.Item className={styles.menuItem} key="1">
+      <Menu.Item key="edit">
         <Link href={`/users/edit/${userId}`} className={styles.edit}>
           <Icon name={IconNameEnum.Lock} width={24} height={24} />
           Change Password
         </Link>
       </Menu.Item>
-      <Menu.Item
-        className={styles.menuItemDelete}
-        key="2"
-        onClick={() => handleDelete(userId)}
-      >
-        <Link href={'/'} className={styles.block}>
+      <Menu.Item key="block" onClick={() => handleBlock(userId)}>
+        <div className={styles.block}>
           <Icon name={IconNameEnum.Block} width={24} height={24} />
           <Text
             htmlType={TextHtmlTypeEnum.Span}
@@ -55,7 +50,7 @@ const UsersTable: React.FC = () => {
           >
             Block
           </Text>
-        </Link>
+        </div>
       </Menu.Item>
     </Menu>
   );
@@ -69,19 +64,17 @@ const UsersTable: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => {
-        return (
-          <Dropdown
-            overlay={menu(record.id)}
-            trigger={['click']}
-            placement="bottomRight"
-          >
-            <Button
-              icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-            />
-          </Dropdown>
-        );
-      },
+      render: (_, record) => (
+        <Dropdown
+          overlay={renderMenu(record.id)}
+          trigger={['click']}
+          placement="bottomRight"
+        >
+          <Button
+            icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
+          />
+        </Dropdown>
+      ),
     },
   ];
 

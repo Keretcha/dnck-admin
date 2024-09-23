@@ -1,3 +1,5 @@
+'use client';
+
 import { Table, Dropdown, Menu, Button, message } from 'antd';
 import { ColumnType } from 'antd/es/table/interface';
 import React, { useEffect, useState } from 'react';
@@ -7,27 +9,34 @@ import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import styles from './artistControl.module.scss';
 import HitsItemDisplay from './hitsitems/hitsItems';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
+import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
+import Upload from '../../Header/UploadButton/Upload';
+import Link from 'next/link';
 
 const ArtistControlTable: React.FC = () => {
   const { data: initialData } = useSWR<ArtistInterface[]>('/artists', fetcher);
   const [artists, setArtists] = useState<ArtistInterface[]>(initialData || []);
+  const { mutate } = useSWR('/artists', fetcher);
 
   useEffect(() => {
     if (initialData) {
       setArtists(initialData);
+      console.log(initialData);
     }
   }, [initialData]);
 
   const handleDelete = async (artistId: number): Promise<void> => {
     try {
-      await fetch(`/artists/${artistId}`, { method: 'DELETE' });
+      await ApiClient.delete(`/artists/${artistId}`, {}).then(() => {
+        mutate('/artists');
+      });
       setArtists((prevArtists) =>
-        prevArtists.filter((artist) => artist.id !== artistId),
+        prevArtists?.filter?.((artist) => artist.id !== artistId),
       );
-      message.success('Artist deleted successfully');
+      message?.success('Artist deleted successfully');
     } catch (error) {
-      message.error('Failed to delete artist');
+      message?.error('Failed to delete artist');
     }
   };
 
@@ -55,8 +64,9 @@ const ArtistControlTable: React.FC = () => {
       render: (text: string, record: ArtistInterface) => (
         <HitsItemDisplay
           item={{
-            artistName: record.firstName + ' ' + record.lastName,
-            backgroundImage: record.albums[0].history?.location,
+            name: `${record.firstName} ${record.lastName}`,
+            backgroundImage: record?.history?.location,
+            albumName: `${record.biography}`,
           }}
         />
       ),
@@ -81,6 +91,7 @@ const ArtistControlTable: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      <Upload href={'/createArtist'}>Upload Artist</Upload>
       <Table columns={columns} dataSource={artists} pagination={false} />
     </div>
   );

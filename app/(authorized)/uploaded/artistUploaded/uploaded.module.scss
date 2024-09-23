@@ -7,16 +7,17 @@
   height: 60vh;
 }
 .done {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 .uploadedText {
-    display: flex;
-    flex-flow: column wrap;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-flow: column wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: green;
 }

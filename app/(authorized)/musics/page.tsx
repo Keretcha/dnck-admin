@@ -1,20 +1,24 @@
 'use client';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { MusicInterface } from '../albums/interfaces/track.interface';
 import DataType from '@/app/Components/Tables/artists/interfaces/artistControl-props.interface';
 import MusicControlPage from '@/app/Components/Tables/musics/musicsControl';
+import { ApiClient } from '@/app/api/api';
+import { fetcher } from '@/app/api/fetcher';
 
 export default function Home(): JSX.Element {
-  const [music, setMusic] = useState<DataType[]>([]);
+  const { data: musics } = useSWR<MusicInterface[]>(`/musics`, fetcher);
 
   useEffect(() => {
     const fetchMusics = async (): Promise<void> => {
       try {
-        const response: AxiosResponse<DataType[]> = await axios.get(
-          'https://dnck-back.ge/musics',
-        );
-        setMusic(response.data);
+        const response: AxiosResponse<DataType[]> =
+          await ApiClient.get('/musics');
+        console.log(response.data);
+
         localStorage.setItem('response.data', JSON.stringify(response.data));
         router.push('/uploaded');
       } catch (err) {
@@ -26,7 +30,7 @@ export default function Home(): JSX.Element {
 
   return (
     <div>
-      <MusicControlPage data={music} />
+      <MusicControlPage data={musics} />
     </div>
   );
 }

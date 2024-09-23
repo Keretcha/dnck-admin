@@ -5,12 +5,13 @@ import styles from './AlbumCard.module.scss';
 import { AlbumCardPropsInterface } from './interfaces/album-card-props.interface';
 import { AlbumCardType } from './types/albumcard.type';
 import Text from '@/app/Components/Text/Text';
+import { Router } from 'next/router';
 const AlbumCard: AlbumCardType = (props: AlbumCardPropsInterface) => {
   return (
     <div className={`${styles.albumCard} ${styles.dark}`}>
       <div className={styles.albumCardImage}>
         <Image
-          src={props.image}
+          src={props.imgUrl}
           alt={props.albumName}
           width={184}
           height={146}
@@ -23,7 +24,7 @@ const AlbumCard: AlbumCardType = (props: AlbumCardPropsInterface) => {
             htmlType={TextHtmlTypeEnum.Span}
             type={TextTypeEnum.PrimaryTextLarge}
           >
-            {props.artistName}
+            {props.title}
           </Text>
         </div>
         <Text

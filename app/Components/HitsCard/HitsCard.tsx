@@ -14,7 +14,7 @@ const HitsCard: HitsCardType = (props: HitsCardItemsInterface) => {
           <div
             className={styles.hitsCardsImage}
             style={{
-              backgroundImage: props.backgroundImage,
+              backgroundImage: `url(${props.backgroundImage})`,
               backgroundRepeat: `no-repeat`,
               backgroundSize: 'cover',
             }}
@@ -32,7 +32,7 @@ const HitsCard: HitsCardType = (props: HitsCardItemsInterface) => {
               htmlType={TextHtmlTypeEnum.Span}
               type={TextTypeEnum.SecondaryTextMedium}
             >
-              {props.albumName}
+              {props.name}
             </Text>
           </div>
         </div>

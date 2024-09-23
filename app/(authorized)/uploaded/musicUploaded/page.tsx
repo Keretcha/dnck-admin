@@ -6,7 +6,7 @@ import { TextHtmlTypeEnum } from '../../../Components/Text/enums/text-html-type.
 import { TextTypeEnum } from '../../../Components/Text/enums/text-type.enum';
 import styles from './uploaded.module.scss';
 
-const ArtistUploaded = (): JSX.Element => {
+const MusicUploaded = (): JSX.Element => {
   return (
     <div className="container">
       <div className={styles.content}>
@@ -21,7 +21,7 @@ const ArtistUploaded = (): JSX.Element => {
             <Heading type={HeadingTypeEnum.H4}>Music Uploaded</Heading>
             <Text
               htmlType={TextHtmlTypeEnum.Span}
-              type={TextTypeEnum.SecondaryTextSmall}
+              type={TextTypeEnum.PrimaryTextLarge}
             >
               Gela Gnolidze Added In Music
             </Text>
@@ -32,4 +32,4 @@ const ArtistUploaded = (): JSX.Element => {
   );
 };
 
-export default ArtistUploaded;
+export default MusicUploaded;

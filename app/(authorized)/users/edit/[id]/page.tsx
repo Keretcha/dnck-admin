@@ -1,5 +1,6 @@
 'use client';
-import axios, { AxiosResponse } from 'axios';
+
+import axios from 'axios';
 import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
@@ -29,20 +30,20 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
 
     const token: string | null = getCookie('accessToken');
 
-    const response: AxiosResponse = async () => {
+    const response = async (): Promise<void> => {
       try {
         await axios.put(
           `https://back.dnck.ge/albums/${props.params.id}`,
           data,
-
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
+        console.log(response);
       } catch {
-        console.log(response.data);
+        console.error('Error updating album:');
       }
     };
   };

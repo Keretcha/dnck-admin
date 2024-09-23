@@ -1,8 +1,13 @@
+import { AlbumInterface } from './albums.interfaces';
+
 export interface MusicInterface {
   id: number;
-  title: string;
-  duration: number;
-  albumId: number;
+  name: string;
+  album: AlbumInterface[];
+  src: string;
+  history: {
+    location: string;
+  };
 }
 
 export interface TableDataType {
