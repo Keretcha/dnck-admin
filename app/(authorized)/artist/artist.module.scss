@@ -1,0 +1,19 @@
+@import '../../Colors/common-colors.scss';
+@import '../../Colors/dark-colors.scss';
+@import '../../Colors/light-colors.scss';
+
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 16px;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerText {
+  color: $seconday-white;
+}

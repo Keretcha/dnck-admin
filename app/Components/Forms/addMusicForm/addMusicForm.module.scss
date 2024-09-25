@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  color: $primary-white;
 }
 .forms {
   display: flex;
@@ -20,6 +21,7 @@
   outline: none;
   border: none;
   background-color: $admin-third;
+  color: $primary-white;
 }
 .bigInput {
   padding: 24px;
@@ -32,4 +34,59 @@
   display: flex;
   justify-content: center;
   width: 100%;
+}
+.chooseArtist {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 8px;
+  color: $primary-white;
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  outline: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background-color: $admin-third;
+  color: $primary-white;
+  background-image: url(/public/icons/arrowDown.svg);
+  background-position: right 10px center;
+  background-size: 26px;
+  cursor: pointer;
+}
+.option {
+  background-color: $admin-third;
+  border-radius: 12px;
+}
+
+.customFileUpload {
+  position: relative;
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileLabel {
+  display: block;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background-color: $admin-third;
+  color: $primary-color;
+  transition: border-color 0.3s;
+  background-image: url(../../../../public/icons/Upload.svg);
+  background-position: left 14px top 50%;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.colored {
+  color: $primary-white !important;
 }

@@ -9,7 +9,7 @@ export const headerNavItems: NavItemPropsInterface[] = [
   },
   {
     icon: IconNameEnum.Microphone,
-    href: '/artists',
+    href: '/artist',
     title: 'Artists',
   },
   {
@@ -19,7 +19,7 @@ export const headerNavItems: NavItemPropsInterface[] = [
   },
   {
     icon: IconNameEnum.PlayList,
-    href: '/music',
+    href: '/musics',
     title: 'Musics',
   },
 ];

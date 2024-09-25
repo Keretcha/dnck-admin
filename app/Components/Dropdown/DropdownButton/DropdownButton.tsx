@@ -12,9 +12,7 @@ const DropdownButton: DropdownButtonType = (
 ) => {
   return (
     <Link href={props.href}>
-      <div
-        className={`${styles.button} ${props.darkMode ? styles.dark : styles.light}`}
-      >
+      <div className={styles.button}>
         <Icon name={props.icon} width={24} height={24} />
         <Text
           htmlType={TextHtmlTypeEnum.Span}

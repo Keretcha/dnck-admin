@@ -1,5 +1,5 @@
 import styles from './page.module.scss';
-import AddArtistForm from '@/app/Components/Forms/addArtistForm/addArtistForm';
+import AddArtistForm from '@/app/Components/Forms/addArtistForm/AddArtistForm';
 import Heading from '@/app/Components/Heading/Heading';
 import { HeadingTypeEnum } from '@/app/Components/Heading/enums/heading-type.enum';
 

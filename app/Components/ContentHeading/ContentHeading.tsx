@@ -14,7 +14,7 @@ const ContentHeading: ContentHeadingType = (
   return (
     <div className={styles.container}>
       <Heading type={HeadingTypeEnum.H5}>{props.children}</Heading>
-      <Link href={'/playlist'}>
+      <Link href={props.href}>
         <Text
           htmlType={TextHtmlTypeEnum.Span}
           type={TextTypeEnum.SecondaryTextMediumBold}

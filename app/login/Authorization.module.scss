@@ -1,0 +1,111 @@
+@import '../Colors/common-colors.scss';
+@import '../Colors/dark-colors.scss';
+@import '../Colors/light-colors.scss';
+@import '../Colors/admin-colors.scss';
+
+.container {
+  background-color: $admin-background;
+  color: $primary-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 48px;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  max-width: 1440px;
+  align-items: center;
+  justify-content: center;
+  // color: $primary-white;
+}
+
+.projectName {
+  color: $primary-color;
+}
+
+.test {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  width: 100%;
+  max-width: 500px;
+}
+
+.authorizationForm {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 16px;
+}
+
+.inputs {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 8px;
+}
+
+.authorizationInput {
+  padding: 24px;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid $disable-stroke-white;
+  background-color: $background-color-dark-mode;
+  color: $primary-white;
+}
+
+.check {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.signUpContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.signUp {
+  color: $primary-color;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+}
+
+@media screen and (max-width: 1200px) {
+  .test {
+    justify-content: center;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .image {
+    width: 500px;
+    height: 160px;
+  }
+  .form {
+    padding: 16px;
+  }
+}

@@ -24,7 +24,6 @@ const SignUp: SignUpTypes = () => {
 
   const password: string = watch('password');
   const rePassword: string = watch('rePassword');
-
   const onSubmit = async (values: object): Promise<void> => {
     if (password !== rePassword) {
       setError('password', {});
@@ -32,7 +31,7 @@ const SignUp: SignUpTypes = () => {
     }
 
     try {
-      await axios.post('http://10.10.51.20:3000/auth/register', values);
+      await axios.post('https://back.dnck.ge/auth/register', values);
       console.log('User registered successfully');
     } catch (err) {
       console.error('Can not load this page', err);

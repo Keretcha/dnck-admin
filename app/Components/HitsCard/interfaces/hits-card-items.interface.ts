@@ -1,10 +1,15 @@
 import { DropDownItemsInterface } from '../../Dropdown/interfaces/dropdown-items-props.interface';
-import { PlayButtonPropsInterface } from '../../PlayButton/interfaces/play-button-props.interface';
+import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
+import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 
 export interface HitsCardItemsInterface {
+  artistName: ReactNode;
   dropDownItems?: DropDownItemsInterface[];
   backgroundImage: string;
-  artistName: string;
-  albumName: string;
-  button?: PlayButtonPropsInterface[];
+  album: AlbumInterface;
+  src: string;
+  name?: string;
+  id: number;
+  albumName?: string;
+  artist?: ArtistInterface;
 }

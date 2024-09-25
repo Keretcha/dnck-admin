@@ -4,6 +4,7 @@ import {
   navBarItems,
 } from '../Header/HeaderNavItems/HeaderNavItems';
 import Logo from '../Header/Logo/Logo';
+import Upload from '../Header/UploadButton/Upload';
 import NavMenu from '../NavMenu/NavMenu';
 import Text from '../Text/Text';
 import { TextHtmlTypeEnum } from '../Text/enums/text-html-type.enum';
@@ -33,7 +34,9 @@ const AdminHeader = (props: AdminHeaderPropsInterface): JSX.Element => {
         </div>
       </div>
       <div className={styles.header}>
-        <Header />
+        <div>
+          <Header />
+        </div>
         <div className={styles.content}>{props.children}</div>
       </div>
     </div>

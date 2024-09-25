@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+
 import { useState, useRef, RefObject, useEffect } from 'react';
 import styles from './Dropdown.module.scss';
 import DropdownContainer from './DropdownContainer/DropdownContainer';
@@ -38,13 +38,11 @@ const Dropdown: DropdownType = (props: DropdownPropsInterface) => {
       >
         {props.icon}
       </div>
-      <Link href={'props.href'}>
-        <div
-          className={`${styles.dropdownContainer} ${show ? styles.visible : ''}  ${styles[props.position]}`}
-        >
-          <DropdownContainer items={props.items} />
-        </div>
-      </Link>
+      <div
+        className={`${styles.dropdownContainer} ${show ? styles.visible : ''}  ${styles[props.position]}`}
+      >
+        <DropdownContainer items={props.items} />
+      </div>
     </div>
   );
 };
