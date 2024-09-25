@@ -1,52 +1,62 @@
 'use client';
 
-import axios from 'axios';
+import { AxiosResponse } from 'axios';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import styles from './page.module.scss';
-import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
-import { fetcher } from '@/app/api/fetcher';
-import { getCookie } from '@/helpers/cookies'; // Adjust import if necessary
 import { UserInterface } from '@/app/Components/Tables/users/interfaces/users-control.interfaces';
+import { ApiClient } from '@/app/api/api';
+import { fetcher } from '@/app/api/fetcher';
+import { getCookie } from '@/helpers/cookies';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
   const { data } = useSWR<UserInterface>(`/users/${props.params.id}`, fetcher);
+  const router: AppRouterInstance = useRouter();
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
-    const data: FormData = new FormData();
+    const { email, password } = values;
 
-    data.append('email', values.email);
-    data.append('password', values.password);
-    data.append('password', values.password);
+    if (password !== watch('rePassword')) {
+      console.error('Passwords do not match');
+      return;
+    }
+
+    const data: FormData = new FormData();
+    data.append('email', email);
+    data.append('password', password);
 
     const token: string | null = getCookie('accessToken');
 
-    const response = async (): Promise<void> => {
-      try {
-        await axios.put(`https://back.dnck.ge/users/${props.params.id}`, data, {
+    try {
+      const response: AxiosResponse = await ApiClient.put(
+        `/users/${props.params.id}`,
+        data,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-        console.log(response);
-      } catch {
-        console.error('Error updating album:');
-      }
-    };
+        },
+      );
+      router.push('/users');
+      console.log('Password updated successfully:', response.data);
+    } catch (error) {
+      console.error('Error updating password:', error);
+    }
   };
 
   useEffect(() => {
     if (data) {
       reset({
         email: data.email,
-        password: data.password,
       });
     }
-  }, [data]);
+  }, [data, reset]);
 
   return (
     <div className={styles.addArtist}>
@@ -56,7 +66,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
           <label>User Email</label>
           <input
             type="email"
-            {...register('email', { maxLength: 32 })}
+            {...register('email', { required: true, maxLength: 32 })}
             className={styles.smallInput}
             placeholder="User Email."
           />
@@ -65,7 +75,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
           <label>New Password</label>
           <input
             type="password"
-            {...register('password')}
+            {...register('password', { required: true })}
             className={styles.smallInput}
             placeholder="Password"
           />
@@ -74,7 +84,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
           <label>Re-enter Password</label>
           <input
             type="password"
-            {...register('password')}
+            {...register('rePassword', { required: true })}
             className={styles.smallInput}
             placeholder="Re-enter Password"
           />
@@ -84,7 +94,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
           htmlType="submit"
           type={ButtonTypeEnum.Primary}
         >
-          Upload
+          Change Password
         </Button>
       </form>
     </div>

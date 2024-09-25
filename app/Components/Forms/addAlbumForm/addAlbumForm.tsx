@@ -55,7 +55,6 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
           },
         },
       );
-      console.log(response.data);
 
       router.push('/uploaded/albumUploaded');
     } catch (err) {
