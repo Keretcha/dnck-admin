@@ -1,8 +1,11 @@
 'use client';
+
 import type { TableColumnsType } from 'antd';
 import { Table, Dropdown, Button, message, Menu } from 'antd';
-import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import React from 'react';
 import useSWR from 'swr';
+import Upload from '../../Header/UploadButton/Upload';
 import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import Text from '../../Text/Text';
@@ -11,14 +14,13 @@ import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import DataType from '../artists/interfaces/artistControl-props.interface';
 import HitsItemDisplay from './hitsitems/hitsItems';
 import styles from './musicsControl.module.scss';
-import { MusicInterface } from '@/app/(authorized)/albums/interfaces/track.interface';
+import { MusicInterface } from '@/app/(authorized)/albums/interfaces/music.interface';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-import Link from 'next/link';
-import Upload from '../../Header/UploadButton/Upload';
 
 interface MusicControlPageProps {
-  data: DataType[];
+  data?: DataType[];
+  musics?: MusicInterface[];
 }
 
 const MusicControlPage: React.FC<MusicControlPageProps> = () => {
@@ -37,7 +39,7 @@ const MusicControlPage: React.FC<MusicControlPageProps> = () => {
   const menu = (musicId: number): React.JSX.Element => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
-        <Link href={'/music/edit/${musicId}'}>
+        <Link href={`/musics/edit/${musicId}`}>
           <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
           Edit Music
         </Link>
@@ -76,7 +78,7 @@ const MusicControlPage: React.FC<MusicControlPageProps> = () => {
       title: '',
       key: 'action',
       width: 20,
-      render: (_, record: MusicInterface) => (
+      render: (record: MusicInterface) => (
         <Dropdown
           overlay={menu(record.id)}
           trigger={['click']}

@@ -1,8 +1,7 @@
 import { ArtistInterface } from './artist.interfaces';
-import { MusicInterface } from './track.interface';
+import { MusicInterface } from './music.interface';
 
 export interface AlbumInterface {
-  biography: any;
   history: { location: string };
   musics: MusicInterface[];
   id: number;

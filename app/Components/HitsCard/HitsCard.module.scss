@@ -21,7 +21,6 @@
 }
 .content {
   display: flex;
-  flex-flow: row wrap;
   gap: 4px;
   align-items: center;
   width: 100%;
@@ -54,6 +53,8 @@
 
 .albumName {
   color: $seconday-white;
+  display: flex;
+  flex-flow: row wrap;
 }
 .hitsCardsImage {
   background-repeat: no-repeat;

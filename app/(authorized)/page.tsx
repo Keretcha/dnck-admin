@@ -6,7 +6,7 @@ import ContentHeading from '../Components/ContentHeading/ContentHeading';
 import HitsCards from '../Components/HitsCards/HitsCards';
 import { fetcher } from '../api/fetcher';
 import { AlbumInterface } from './albums/interfaces/albums.interfaces';
-import { MusicInterface } from './albums/interfaces/track.interface';
+import { MusicInterface } from './albums/interfaces/music.interface';
 import styles from './page.module.scss';
 
 export default function Home(): JSX.Element {
@@ -18,49 +18,54 @@ export default function Home(): JSX.Element {
       <div className={styles.pageContent}>
         <div className={styles.sections}>
           <div className={styles.content}>
-            <ContentHeading>Recently Added Artists</ContentHeading>
+            <div className={styles.cards}>
+              <ContentHeading href={'/artists'}>
+                Recently Added Artists
+              </ContentHeading>
+              <div className={styles.cards}>
+                {musics && (
+                  <HitsCards
+                    items={musics.slice(0, 100).map((hit) => {
+                      return {
+                        backgroundImage: hit?.album?.history?.location,
+                        album: hit.album,
+                        name: hit.name,
+                        src: hit.history.location,
+                        id: hit.id,
+                        dropDownItems: [],
+                      };
+                    })}
+                  />
+                )}
+              </div>
+            </div>
+            <div className={styles.content}>
+              <ContentHeading href={'/albums'}>
+                Recently Added Albums
+              </ContentHeading>
+              <div className={styles.albumCards}>
+                {albums && (
+                  <AlbumCards
+                    items={albums.slice(0, 100).map((album) => ({
+                      title: album.name,
+                      imgUrl: album.history?.location,
+                      artists: album.artists,
+                      dropDownItems: [],
+                      id: album.id,
+                    }))}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={styles.content}>
+            <ContentHeading href={'/artists'}>
+              Recently Added Artists
+            </ContentHeading>
             <div className={styles.cards}>
               {musics && (
                 <HitsCards
                   items={musics.slice(0, 9).map((hit) => {
-                    return {
-                      backgroundImage: hit?.album?.history?.location,
-                      album: hit.album,
-                      name: hit.name,
-                      src: hit.history.location,
-                      id: hit.id,
-                      dropDownItems: [],
-                    };
-                  })}
-                />
-              )}
-            </div>
-          </div>
-          <div className={styles.content}>
-            <ContentHeading>Recently Added Albums</ContentHeading>
-            <div className={styles.cards}>
-              {albums && (
-                <AlbumCards
-                  items={albums.slice(0, 4).map?.((album) => {
-                    console.log(album, 'albums');
-                    return {
-                      title: album?.name,
-                      imgUrl: album.history.location,
-                      artists: album?.artists,
-                      dropDownItems: [],
-                    };
-                  })}
-                />
-              )}
-            </div>
-          </div>
-          <div className={styles.content}>
-            <ContentHeading>Recently Added Artists</ContentHeading>
-            <div className={styles.cards}>
-              {musics && (
-                <HitsCards
-                  items={musics.slice(0, 9).map((hit) => {
-                    console.log(hit?.album?.history?.location, 'loccaa');
                     return {
                       backgroundImage: hit?.album?.history?.location,
                       album: hit.album,
@@ -79,5 +84,3 @@ export default function Home(): JSX.Element {
     </div>
   );
 }
-
-// export default MainPage;

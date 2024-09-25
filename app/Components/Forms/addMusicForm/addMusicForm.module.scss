@@ -39,6 +39,7 @@
   display: flex;
   flex-flow: column wrap;
   gap: 8px;
+  color: $primary-white;
 }
 
 .select {
@@ -57,4 +58,35 @@
 .option {
   background-color: $admin-third;
   border-radius: 12px;
+}
+
+.customFileUpload {
+  position: relative;
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileLabel {
+  display: block;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background-color: $admin-third;
+  color: $primary-color;
+  transition: border-color 0.3s;
+  background-image: url(../../../../public/icons/Upload.svg);
+  background-position: left 14px top 50%;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.colored {
+  color: $primary-white !important;
 }

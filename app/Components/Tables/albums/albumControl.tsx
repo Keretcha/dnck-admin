@@ -3,8 +3,9 @@
 import type { TableColumnsType } from 'antd';
 import { Table, Dropdown, Menu, Button, message } from 'antd';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useSWR from 'swr';
+import Upload from '../../Header/UploadButton/Upload';
 import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import Text from '../../Text/Text';
@@ -13,10 +14,10 @@ import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import styles from './albumControl.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
-import { TableDataType } from '@/app/(authorized)/albums/interfaces/track.interface';
+import { TableDataType } from '@/app/(authorized)/albums/interfaces/music.interface';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-import Upload from '../../Header/UploadButton/Upload';
+import { useRouter } from 'next/navigation';
 
 const AlbumControlPage: React.FC = () => {
   const { data: initialData } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
@@ -108,6 +109,12 @@ const AlbumControlPage: React.FC = () => {
       ),
     },
   ];
+
+  const router = useRouter();
+
+  const onClick = (album: { id: number }) => {
+    router.push(`/albums/${album.id}`);
+  };
 
   const data: TableDataType[] = initialData
     ? initialData?.map?.((album) => ({

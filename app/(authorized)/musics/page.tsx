@@ -1,9 +1,9 @@
 'use client';
 import { AxiosResponse } from 'axios';
 import router from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
-import { MusicInterface } from '../albums/interfaces/track.interface';
+import { MusicInterface } from '../albums/interfaces/music.interface';
 import DataType from '@/app/Components/Tables/artists/interfaces/artistControl-props.interface';
 import MusicControlPage from '@/app/Components/Tables/musics/musicsControl';
 import { ApiClient } from '@/app/api/api';

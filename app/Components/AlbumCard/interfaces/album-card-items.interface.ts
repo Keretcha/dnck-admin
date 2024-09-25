@@ -6,4 +6,6 @@ export interface AlbumCardItemsInterface {
   imgUrl: string;
   artists: ArtistInterface[];
   title: string;
+  href: string;
+  id: number;
 }

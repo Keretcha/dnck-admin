@@ -1,5 +1,4 @@
 'use client';
-import { eraseCookie } from '@/helpers/cookies';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { IconNameEnum } from '../Icon/enums/icon-name.enum';
@@ -7,6 +6,7 @@ import styles from './Header.module.scss';
 import SearchInput from './SearchInput/SearchInput';
 import { HeaderType } from './Type/Header.type';
 import Upload from './UploadButton/Upload';
+import { eraseCookie } from '@/helpers/cookies';
 
 const Header: HeaderType = () => {
   const router: AppRouterInstance = useRouter();

@@ -1,5 +1,4 @@
-import { AlbumInterface } from './albums.interfaces';
-import { MusicInterface } from './track.interface';
+import { MusicInterface } from './music.interface';
 
 export interface ArtistInterface {
   artists: any;

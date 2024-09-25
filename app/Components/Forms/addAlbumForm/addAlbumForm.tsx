@@ -4,14 +4,14 @@ import axios, { AxiosResponse } from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { FieldValues, useForm } from 'react-hook-form';
+import useSWR from 'swr';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addAlbumForm.module.scss';
-import { getCookie } from '@/helpers/cookies';
 import { AddAlbumFormProps } from './interfaces/chooseArtist.interface';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 import { fetcher } from '@/app/api/fetcher';
-import useSWR from 'swr';
+import { getCookie } from '@/helpers/cookies';
 
 const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
   const { register, handleSubmit } = useForm();
@@ -30,7 +30,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
     data.append('name', values.name);
     data.append('artistId', values.artistId);
     data.append('releaseDate', values.releaseDate);
-    if (values.file && values.file[0]) {
+    if (values.file && values.file.length > 0) {
       data.append('file', values.file[0]);
     }
 
@@ -42,7 +42,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
     }
 
     try {
-      const url = albumId
+      const url: string = albumId
         ? `https://back.dnck.ge/albums/${albumId}`
         : 'https://back.dnck.ge/albums';
 
@@ -100,13 +100,21 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
             ))}
           </select>
         </div>
-        <div className={styles.inputs}>
-          <label>Upload Album Cover</label>
+        <div className={styles.customFileUpload}>
+          <label htmlFor="file-upload">Select Music</label>
           <input
             type="file"
-            {...register('file')}
-            className={styles.bigInput}
+            {...register('file', { required: true })}
+            id="file-upload"
+            className={styles.fileInput}
           />
+          <label htmlFor="file-upload" className={styles.fileLabel}>
+            Select music
+            <span className={styles.colored}>
+              {' '}
+              file or drop music file here.
+            </span>
+          </label>
         </div>
         <Button
           className={styles.uploadButton}

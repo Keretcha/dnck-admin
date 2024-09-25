@@ -17,10 +17,17 @@
   gap: 24px;
   max-width: 1128px;
 }
+
 .navBarText {
   color: $seconday-white;
 }
 
 .cards {
+  width: 100%;
+}
+
+.albumCards {
+  display: flex;
+  flex-flow: row wrap;
   width: 100%;
 }

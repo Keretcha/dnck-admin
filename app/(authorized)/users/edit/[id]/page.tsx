@@ -10,37 +10,28 @@ import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies'; // Adjust import if necessary
+import { UserInterface } from '@/app/Components/Tables/users/interfaces/users-control.interfaces';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();
-  const { data } = useSWR<AlbumInterface>(
-    `/albums/${props.params.id}`,
-    fetcher,
-  );
-
-  console.log(data);
+  const { data } = useSWR<UserInterface>(`/users/${props.params.id}`, fetcher);
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
-    console.log('here');
     const data: FormData = new FormData();
 
-    data.append('name', values.name);
-    data.append('releaseDate', values.releaseDate);
-    data.append('file', values.file[0]);
+    data.append('email', values.email);
+    data.append('password', values.password);
+    data.append('password', values.password);
 
     const token: string | null = getCookie('accessToken');
 
     const response = async (): Promise<void> => {
       try {
-        await axios.put(
-          `https://back.dnck.ge/albums/${props.params.id}`,
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        await axios.put(`https://back.dnck.ge/users/${props.params.id}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
         console.log(response);
       } catch {
         console.error('Error updating album:');
@@ -51,8 +42,8 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   useEffect(() => {
     if (data) {
       reset({
-        email: data.name,
-        password: data,
+        email: data.email,
+        password: data.password,
       });
     }
   }, [data]);
@@ -62,11 +53,12 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
       <h1>Change Password</h1>
       <form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputs}>
-          <label>User Name</label>
+          <label>User Email</label>
           <input
-            {...register('name', { maxLength: 32 })}
+            type="email"
+            {...register('email', { maxLength: 32 })}
             className={styles.smallInput}
-            placeholder="User Name."
+            placeholder="User Email."
           />
         </div>
         <div className={styles.inputs}>

@@ -1,28 +1,23 @@
 'use client';
 import axios from 'axios';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { FieldValues, useForm } from 'react-hook-form';
+import useSWR from 'swr';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addMusicForm.module.scss';
-import { getCookie } from '@/helpers/cookies';
-import { fetcher } from '@/app/api/fetcher';
-import useSWR from 'swr';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { fetcher } from '@/app/api/fetcher';
+import { getCookie } from '@/helpers/cookies';
 
 const AddMusicForm = (): JSX.Element => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
+  const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
   const { data: albums, error } = useSWR<AlbumInterface[]>('/albums', fetcher);
 
-  const handleLoadingState = () => {
-    if (error) return <div>Error loading artists.</div>;
+  const handleLoadingState = (): JSX.Element | null => {
+    if (error) return <div>Error loading albums.</div>;
     if (!albums) return <div>Loading...</div>;
     return null;
   };
@@ -47,7 +42,7 @@ const AddMusicForm = (): JSX.Element => {
     }
   };
 
-  const renderArtistOptions = () => {
+  const renderAlbumOptions = (): JSX.Element[] | undefined => {
     return albums?.map((album) => (
       <option key={album.id} value={album.id}>
         {album.name}
@@ -63,37 +58,37 @@ const AddMusicForm = (): JSX.Element => {
           <div className={styles.inputs}>
             <label>Music Name</label>
             <input
-              {...register('name', { maxLength: 666 })}
+              {...register('name', { maxLength: 666, required: true })}
               className={styles.smallInput}
               placeholder="EXP: Dagdagani-yofierebis autaneli sidzulvili"
             />
           </div>
           <div className={styles.inputs}>
             <label>Upload Music File</label>
-            <input
-              type="file"
-              {...register('src')}
-              className={styles.bigInput}
-              placeholder="upload song"
-            />
+            <div className={styles.customFileUpload}>
+              <input
+                type="file"
+                {...register('src', { required: true })}
+                id="file-upload"
+                className={styles.fileInput}
+              />
+              <label htmlFor="file-upload" className={styles.fileLabel}>
+                Select music
+                <span className={styles.colored}>
+                  file or drop music file here.
+                </span>
+              </label>
+            </div>
           </div>
           <div className={styles.chooseArtist}>
-            <label>Choose Artist</label>
+            <label>Choose Album</label>
             <select
               {...register('albumId', { required: true })}
               className={styles.select}
             >
-              <option value="">Select an artist</option>
-              {renderArtistOptions()}
+              <option value="">Select an Album</option>
+              {renderAlbumOptions()}
             </select>
-          </div>
-          <div className={styles.inputs}>
-            <label>Music Description</label>
-            <input
-              {...register('description', { maxLength: 666 })}
-              className={styles.smallInput}
-              placeholder="Description"
-            />
           </div>
 
           <Button

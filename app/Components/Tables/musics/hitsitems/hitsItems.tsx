@@ -11,7 +11,7 @@ const HitsItemDisplay: React.FC<{ item: HitsCardItemsInterface }> = ({
         width: 50,
         height: 50,
         backgroundPosition: 'center',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
       }}
     ></div>
     <div>

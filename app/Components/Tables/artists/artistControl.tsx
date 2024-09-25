@@ -4,6 +4,7 @@ import { Table, Dropdown, Menu, Button, message } from 'antd';
 import { ColumnType } from 'antd/es/table/interface';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import Upload from '../../Header/UploadButton/Upload';
 import Icon from '../../Icon/Icon';
 import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import styles from './artistControl.module.scss';
@@ -11,8 +12,6 @@ import HitsItemDisplay from './hitsitems/hitsItems';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-import Upload from '../../Header/UploadButton/Upload';
-import Link from 'next/link';
 
 const ArtistControlTable: React.FC = () => {
   const { data: initialData } = useSWR<ArtistInterface[]>('/artists', fetcher);

@@ -1,43 +1,51 @@
 'use client';
-import axios, { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
+import { message } from 'antd';
+import { AxiosResponse } from 'axios';
+import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import styles from './page.module.scss';
+import { MusicInterface } from '@/app/(authorized)/albums/interfaces/music.interface';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
+import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
-import { MusicInterface } from '@/app/(authorized)/albums/interfaces/track.interface';
-import { ApiClient } from '@/app/api/api';
-import { message } from 'antd';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();
-  const { data: musicData } = useSWR<MusicInterface>(
+  const { data: musicData, error } = useSWR<MusicInterface>(
     `/musics/${props.params.id}`,
     fetcher,
   );
   const { data: albumsData } = useSWR('/albums', fetcher);
+  console.log(musicData, props.params.id, 'id');
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
+
     data.append('name', values.name);
     data.append('albumId', values.albumId);
     data.append('file', values.src[0]);
 
     const token: string | null = getCookie('accessToken');
 
-    try {
-      await ApiClient.put(`/musics/${props.params.id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      message.success('Album updated successfully!');
-    } catch (error) {
-      message.error('Failed to update album.');
-    }
+    const response: AxiosResponse = async () => {
+      try {
+        await ApiClient.put(
+          `https://back.dnck.ge/musics/${props.params.id}`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        message.success('Album updated successfully!');
+      } catch (error) {
+        message.error('Failed to update album.', response.data);
+      }
+    };
   };
 
   const renderAlbumOptions = (): JSX.Element[] => {
@@ -52,10 +60,13 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     if (musicData) {
       reset({
         name: musicData.name,
-        albumId: musicData.albumId,
+        albumId: musicData.id,
+        description: musicData.history,
       });
     }
   }, [musicData]);
+
+  console.log(musicData, error, musicData?.id);
 
   return (
     <div className={styles.addArtist}>
