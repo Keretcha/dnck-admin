@@ -95,7 +95,7 @@ const AlbumControlPage: React.FC = () => {
       title: '',
       key: 'action',
       width: 20,
-      render: (_, record) => (
+      render: (_, record: AlbumInterface) => (
         <Dropdown
           overlay={menu(record.id)}
           trigger={['click']}

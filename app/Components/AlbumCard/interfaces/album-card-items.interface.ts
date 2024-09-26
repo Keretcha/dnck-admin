@@ -9,3 +9,5 @@ export interface AlbumCardItemsInterface {
   href?: string;
   id: number;
 }
+    "react": "^18",
+    "react-dom": "^18",
