@@ -16,7 +16,6 @@ const AlbumCards: AlbumCardsType = (props: AlbumCardsPropsInterface) => {
           dropDownItems={item.dropDownItems}
           image={item.imgUrl}
           albumName={''}
-          href={item.href}
           id={item.id}
         />
       ))}

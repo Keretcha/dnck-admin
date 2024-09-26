@@ -3,7 +3,7 @@ import { AlbumInterface } from './albums.interfaces';
 export interface MusicInterface {
   id: number;
   name: string;
-  album: AlbumInterface[];
+  album: AlbumInterface;
   src: string;
   history: {
     location: string;

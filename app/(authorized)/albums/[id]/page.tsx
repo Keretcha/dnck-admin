@@ -15,7 +15,7 @@ import { TextTypeEnum } from '@/app/Components/Text/enums/text-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 
-const AlbumMusics: AlbumMusicsType = (props: { params: { id: number } }) => {
+const AlbumMusics = (props: { params: { id: number } }) => {
   const { data, error, mutate } = useSWR<{ musics: MusicInterface[] }>(
     `/albums/${props.params.id}`,
     fetcher,
@@ -68,11 +68,13 @@ const AlbumMusics: AlbumMusicsType = (props: { params: { id: number } }) => {
     </Menu>
   );
 
+  type DataType = MusicInterface;
+
   const columns: TableColumnsType<DataType> = [
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text, record: MusicInterface) => (
+      render: (_text, record: MusicInterface) => (
         <HitsItemDisplay
           item={{
             name: record.name,

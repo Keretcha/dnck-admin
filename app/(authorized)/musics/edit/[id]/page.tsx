@@ -11,6 +11,7 @@ import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
+import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();
@@ -18,40 +19,41 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     `/musics/${props.params.id}`,
     fetcher,
   );
-  const { data: albumsData } = useSWR('/albums', fetcher);
-  console.log(musicData, props.params.id, 'id');
+  const { data: albumsData } = useSWR<AlbumInterface[]>('/albums', fetcher);
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
 
     data.append('name', values.name);
     data.append('albumId', values.albumId);
-    data.append('file', values.src[0]);
+
+    if (values.src && values.src.length > 0) {
+      data.append('file', values.src[0]);
+    }
 
     const token: string | null = getCookie('accessToken');
 
-    const response: AxiosResponse = async () => {
-      try {
-        await ApiClient.put(
-          `https://back.dnck.ge/musics/${props.params.id}`,
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+    try {
+      const response: AxiosResponse = await ApiClient.put(
+        `https://back.dnck.ge/musics/${props.params.id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-        message.success('Album updated successfully!');
-      } catch (error) {
-        message.error('Failed to update album.', response.data);
-      }
-    };
+        },
+      );
+      message.success('Music updated successfully!');
+    } catch (error) {
+      message.error('Failed to update music. Please try again.');
+      console.error('Error details:', error);
+    }
   };
 
-  const renderAlbumOptions = (): JSX.Element[] => {
-    return albumsData?.map?.((album) => (
-      <option key={album.id} value={album.id}>
-        {album.name}
+  const renderAlbumOptions = () => {
+    return albumsData?.map((props: AlbumInterface) => (
+      <option key={props.id} value={props.id}>
+        {props.name}
       </option>
     ));
   };
@@ -60,13 +62,11 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     if (musicData) {
       reset({
         name: musicData.name,
-        albumId: musicData.id,
+        albumId: musicData.album.id,
         description: musicData.history,
       });
     }
   }, [musicData]);
-
-  console.log(musicData, error, musicData?.id);
 
   return (
     <div className={styles.addArtist}>
@@ -74,7 +74,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         <div className={styles.inputs}>
           <label>Music Name</label>
           <input
-            {...register('name', { maxLength: 32 })}
+            {...register('name', { maxLength: 32, required: false })}
             className={styles.smallInput}
             placeholder="Exp: DAMN."
           />
@@ -82,7 +82,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         <div className={styles.chooseArtist}>
           <label>Choose Album</label>
           <select
-            {...register('albumId', { required: true })}
+            {...register('albumId', { required: false })}
             className={styles.select}
           >
             <option value="">Select an album</option>
@@ -91,7 +91,11 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         </div>
         <div className={styles.inputs}>
           <label>Upload Album Cover</label>
-          <input type="file" {...register('src')} className={styles.bigInput} />
+          <input
+            type="file"
+            {...register('src')} // Keep it simple, no need for required if optional
+            className={styles.bigInput}
+          />
         </div>
         <Button
           className={styles.uploadButton}

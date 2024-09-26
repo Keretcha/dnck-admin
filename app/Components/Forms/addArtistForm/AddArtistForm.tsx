@@ -68,19 +68,8 @@ const AddArtistForm = (): JSX.Element => {
         />
       </div>
       <div className={styles.customFileUpload}>
-        <label htmlFor="file-upload">Artist Image</label>
-        <input
-          type="file"
-          {...register('src')}
-          onChange={(e) => setValue('src', e.target.files)}
-          id="file-upload"
-          className={styles.fileInput}
-        />
-        <label htmlFor="file-upload" className={styles.fileLabel}>
-          Select music
-          <span className={styles.colored}>file or drop music file here.</span>
-        </label>
-        <label htmlFor="file-upload"></label>
+        <label htmlFor="file">Select Music</label>
+        <input type="file" {...register('file')} />
       </div>
       <div>
         <Button

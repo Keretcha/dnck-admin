@@ -28,9 +28,19 @@ export default function Home(): JSX.Element {
     fetchMusics();
   }, []);
 
+  const transformedMusics = musics?.map((music) => ({
+    id: music.id,
+    name: music.name,
+    album: music.album,
+    src: music.src,
+    history: music.history,
+  }));
+
+  type DataType = MusicInterface;
+
   return (
     <div>
-      <MusicControlPage data={musics} />
+      <MusicControlPage data={transformedMusics} />
     </div>
   );
 }

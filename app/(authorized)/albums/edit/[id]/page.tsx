@@ -1,5 +1,5 @@
 'use client';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
@@ -8,7 +8,9 @@ import styles from './page.module.scss';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
 import { fetcher } from '@/app/api/fetcher';
-import { getCookie } from '@/helpers/cookies'; // Adjust import if necessary
+import { getCookie } from '@/helpers/cookies';
+import { useRouter } from 'next/navigation';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();
@@ -16,32 +18,36 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     `/albums/${props.params.id}`,
     fetcher,
   );
-
+  const router: AppRouterInstance = useRouter();
   const onSubmit = async (values: FieldValues): Promise<void> => {
-    const data: FormData = new FormData();
+    const formData: FormData = new FormData();
 
-    data.append('name', values.name);
-    data.append('releaseDate', values.releaseDate);
-    data.append('file', values.file[0]);
+    formData.append('name', values.name);
+    formData.append('releaseDate', values.releaseDate);
+
+    if (values.file && values.file.length > 0) {
+      formData.append('file', values.file[0]);
+    }
 
     const token: string | null = getCookie('accessToken');
 
-    const response: AxiosResponse = async () => {
-      try {
-        await axios.put(
-          `https://back.dnck.ge/albums/${props.params.id}`,
-          data,
-
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+    try {
+      await axios.put(
+        `https://back.dnck.ge/albums/${props.params.id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-      } catch {
-        console.log(response.data);
-      }
-    };
+        },
+      );
+
+      reset();
+      router.push('/albums');
+      console.log('Album updated successfully!');
+    } catch (error) {
+      console.error('Failed to update album:', error);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +57,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         releaseDate: data.releaseDate,
       });
     }
-  }, [data]);
+  }, [data, reset]);
 
   return (
     <div className={styles.addArtist}>
