@@ -1,4 +1,5 @@
 import { AlbumInterface } from './albums.interfaces';
+import { ArtistInterface } from './artist.interfaces';
 
 export interface MusicInterface {
   id: number;
@@ -11,17 +12,10 @@ export interface MusicInterface {
 }
 
 export interface TableDataType {
-  id(
-    id: any,
-  ):
-    | import('react').ReactElement<
-        any,
-        string | import('react').JSXElementConstructor<any>
-      >
-    | (() => import('react').ReactElement)
-    | undefined;
+  id: number;
   key: string;
   name: string;
   musics: number;
-  albums?: string;
+  albums?: AlbumInterface;
+  artists?: ArtistInterface[];
 }

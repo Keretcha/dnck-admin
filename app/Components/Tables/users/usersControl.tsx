@@ -1,21 +1,22 @@
-import { ApiClient } from '@/app/api/api';
-import { fetcher } from '@/app/api/fetcher';
 import { message, Menu, TableColumnsType, Dropdown, Button, Table } from 'antd';
 import Link from 'next/link';
 import useSWR from 'swr';
-import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import Icon from '../../Icon/Icon';
+import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
+import Text from '../../Text/Text';
 import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import { UserInterface } from './interfaces/users-control.interfaces';
-import Text from '../../Text/Text';
 import styles from './usersControl.module.scss';
+import { ApiClient } from '@/app/api/api';
+import { fetcher } from '@/app/api/fetcher';
 
-const UsersTable: React.FC = () => {
-  const { data: users = [], mutate } = useSWR<UserInterface[]>(
-    '/users',
-    fetcher,
-  );
+interface UsersTableProps {
+  data: UserInterface[];
+}
+
+const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
+  const { mutate } = useSWR<UserInterface[]>('/users', fetcher);
 
   const handleBlock = async (userId: number): Promise<void> => {
     console.log(`Attempting to block user with ID: ${userId}`);
@@ -60,7 +61,7 @@ const UsersTable: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, record: UserInterface) => (
+      render: (record: UserInterface) => (
         <Dropdown
           overlay={renderMenu(record.id)}
           trigger={['click']}
@@ -74,13 +75,13 @@ const UsersTable: React.FC = () => {
     },
   ];
 
-  if (!users.length) return <div className={styles.load}>Loading...</div>;
+  if (!data.length) return <div className={styles.load}>Loading...</div>;
 
   return (
     <div>
       <Table
         columns={columns}
-        dataSource={users}
+        dataSource={data}
         pagination={false}
         rowKey="id"
       />

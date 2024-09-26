@@ -2,6 +2,7 @@
 
 import { Table, Dropdown, Menu, Button, message } from 'antd';
 import { ColumnType } from 'antd/es/table/interface';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Upload from '../../Header/UploadButton/Upload';
@@ -12,7 +13,6 @@ import HitsItemDisplay from './hitsitems/hitsItems';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-import Link from 'next/link';
 
 const ArtistControlTable: React.FC = () => {
   const { data: initialData } = useSWR<ArtistInterface[]>('/artists', fetcher);

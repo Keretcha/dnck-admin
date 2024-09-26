@@ -62,7 +62,7 @@ const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text: any, record: MusicInterface) => (
+      render: (text: string, record: MusicInterface) => (
         <HitsItemDisplay
           item={{
             name: record.name,

@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import Heading from '../../../Components/Heading/Heading';
+import { JSX } from 'react';
 import { HeadingTypeEnum } from '../../../Components/Heading/enums/heading-type.enum';
 import Text from '../../../Components/Text/Text';
 import { TextHtmlTypeEnum } from '../../../Components/Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../../Components/Text/enums/text-type.enum';
 import styles from './uploaded.module.scss';
-import { JSX } from 'react';
+import Heading from '@/app/Components/Heading/Heading';
 
 const ArtistUploaded = (): JSX.Element => {
   return (

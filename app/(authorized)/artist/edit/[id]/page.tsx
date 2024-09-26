@@ -2,15 +2,15 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import useSWR from 'swr';
 import styles from './page.module.scss';
+import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
-import { getCookie } from '@/helpers/cookies';
-import { useEffect } from 'react';
 import { fetcher } from '@/app/api/fetcher';
-import useSWR from 'swr';
-import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
+import { getCookie } from '@/helpers/cookies';
 
 const AddArtistForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();

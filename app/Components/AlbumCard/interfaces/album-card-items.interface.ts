@@ -3,11 +3,9 @@ import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.int
 
 export interface AlbumCardItemsInterface {
   dropDownItems: DropDownItemsInterface[];
-  imgUrl: string;
-  artists: ArtistInterface[];
+  imgUrl?: string | undefined;
+  artists: ArtistInterface[] | undefined;
   title: string;
   href?: string;
   id: number;
 }
-    "react": "^18",
-    "react-dom": "^18",
