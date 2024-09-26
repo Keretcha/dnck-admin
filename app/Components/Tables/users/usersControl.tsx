@@ -21,12 +21,8 @@ const UsersTable: React.FC = () => {
     console.log(`Attempting to block user with ID: ${userId}`);
 
     try {
-      const response = await ApiClient.delete(`/users/${userId}`, {}).then(
-        () => {
-          mutate();
-        },
-      );
-      console.log('API response:', response);
+      await ApiClient.delete(`/users/${userId}`);
+      mutate();
     } catch (error) {
       console.error('Error blocking user:', error);
       message.error('Failed to block user');
@@ -55,7 +51,7 @@ const UsersTable: React.FC = () => {
     </Menu>
   );
 
-  const columns: TableColumnsType<UserInterface[]> = [
+  const columns: TableColumnsType<UserInterface> = [
     {
       title: 'Email',
       dataIndex: 'email',
@@ -64,7 +60,7 @@ const UsersTable: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: (_: any, record: UserInterface) => (
         <Dropdown
           overlay={renderMenu(record.id)}
           trigger={['click']}
@@ -82,7 +78,12 @@ const UsersTable: React.FC = () => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={users} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={users}
+        pagination={false}
+        rowKey="id"
+      />
     </div>
   );
 };

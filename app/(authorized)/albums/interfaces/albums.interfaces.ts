@@ -7,7 +7,7 @@ export interface AlbumInterface {
   id: number;
   name: string;
   artists: ArtistInterface[];
-  imgUrl: string;
-  releaseDate: string;
-  createdAt: string;
+  imgUrl?: string;
+  releaseDate?: string;
+  createdAt?: string;
 }

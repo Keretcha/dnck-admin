@@ -116,7 +116,7 @@ const AlbumControlPage: React.FC = () => {
     router.push(`/albums/${album.id}`);
   };
 
-  const data: TableDataType[] = initialData
+  const data: AlbumInterface[] = initialData
     ? initialData?.map?.((album) => ({
         key: album.id,
         id: album.id,

@@ -11,8 +11,17 @@ export interface MusicInterface {
 }
 
 export interface TableDataType {
+  id(
+    id: any,
+  ):
+    | import('react').ReactElement<
+        any,
+        string | import('react').JSXElementConstructor<any>
+      >
+    | (() => import('react').ReactElement)
+    | undefined;
   key: string;
   name: string;
   musics: number;
-  albums: string;
+  albums?: string;
 }
