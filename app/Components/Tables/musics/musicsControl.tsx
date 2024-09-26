@@ -11,7 +11,6 @@ import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import Text from '../../Text/Text';
 import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
-import DataType from '../artists/interfaces/artistControl-props.interface';
 import HitsItemDisplay from './hitsitems/hitsItems';
 import styles from './musicsControl.module.scss';
 import { MusicInterface } from '@/app/(authorized)/albums/interfaces/music.interface';
@@ -19,12 +18,11 @@ import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 
 interface MusicControlPageProps {
-  data?: DataType[];
-  musics?: MusicInterface[];
+  data?: MusicInterface[];
 }
 
-const MusicControlPage: React.FC<MusicControlPageProps> = () => {
-  const { data, mutate } = useSWR<MusicInterface[]>('/musics', fetcher);
+const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
+  const { mutate } = useSWR<MusicInterface[]>('/musics', fetcher);
 
   const handleDelete = async (musicId: number): Promise<void> => {
     try {
@@ -60,16 +58,16 @@ const MusicControlPage: React.FC<MusicControlPageProps> = () => {
     </Menu>
   );
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<MusicInterface> = [
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text, record: MusicInterface) => (
+      render: (text: any, record: MusicInterface) => (
         <HitsItemDisplay
           item={{
             name: record.name,
-            backgroundImage: record?.album?.history?.location,
-            albumName: record.name,
+            backgroundImage: record.album?.history?.location,
+            albumName: record.album?.name,
           }}
         />
       ),

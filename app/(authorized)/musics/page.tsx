@@ -4,7 +4,6 @@ import router from 'next/router';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 import { MusicInterface } from '../albums/interfaces/music.interface';
-import DataType from '@/app/Components/Tables/artists/interfaces/artistControl-props.interface';
 import MusicControlPage from '@/app/Components/Tables/musics/musicsControl';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
@@ -28,6 +27,7 @@ export default function Home(): JSX.Element {
     fetchMusics();
   }, []);
 
+  type DataType = MusicInterface;
   const transformedMusics = musics?.map((music) => ({
     id: music.id,
     name: music.name,
@@ -35,8 +35,6 @@ export default function Home(): JSX.Element {
     src: music.src,
     history: music.history,
   }));
-
-  type DataType = MusicInterface;
 
   return (
     <div>
