@@ -1,7 +1,7 @@
 import { HitsCardItemsInterface } from '@/app/Components/HitsCard/interfaces/hits-card-items.interface';
 
 interface DataType {
-  id(id: any): import("react").ReactElement<any, string | import("react").JSXElementConstructor<any>> | (() => import("react").ReactElement) | undefined;
+  id: number;
   key: string;
   name: HitsCardItemsInterface;
   musics: string;

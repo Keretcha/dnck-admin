@@ -1,21 +1,19 @@
 'use client';
 import { Button, Dropdown, message, Table, TableColumnsType, Menu } from 'antd';
 import Link from 'next/link';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import styles from './SingleAlbumPage.module.scss';
-import { AlbumMusicsType } from './types/album-musics.type';
 import { MusicInterface } from '@/app/(authorized)/albums/interfaces/music.interface';
 import Icon from '@/app/Components/Icon/Icon';
 import { IconNameEnum } from '@/app/Components/Icon/enums/icon-name.enum';
 import HitsItemDisplay from '@/app/Components/Tables/artists/hitsitems/hitsItems';
-import DataType from '@/app/Components/Tables/artists/interfaces/artistControl-props.interface';
 import Text from '@/app/Components/Text/Text';
 import { TextHtmlTypeEnum } from '@/app/Components/Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '@/app/Components/Text/enums/text-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 
-const AlbumMusics = (props: { params: { id: number } }) => {
+const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
   const { data, error, mutate } = useSWR<{ musics: MusicInterface[] }>(
     `/albums/${props.params.id}`,
     fetcher,

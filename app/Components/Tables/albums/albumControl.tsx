@@ -13,29 +13,25 @@ import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import styles from './albumControl.module.scss';
-import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
-import { TableDataType } from '@/app/(authorized)/albums/interfaces/music.interface';
+import {
+  MusicInterface,
+  TableDataType,
+} from '@/app/(authorized)/albums/interfaces/music.interface';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-import { useRouter } from 'next/navigation';
 
-const AlbumControlPage: React.FC = () => {
-  const { data: initialData } = useSWR<AlbumInterface[]>(`/albums`, fetcher);
+interface AlbumControlPageProps {
+  data: TableDataType[];
+}
+
+const AlbumControlPage: React.FC<AlbumControlPageProps> = ({ data }) => {
   const { mutate } = useSWR('/albums', fetcher);
 
   const handleDelete = async (albumId: number): Promise<void> => {
     try {
-      await ApiClient.delete(`/albums/${albumId}`, {}).then(() => {
+      await ApiClient.delete(`/albums/${albumId}`).then(() => {
         mutate('/albums');
       });
-
-      if (initialData) {
-        const updatedAlbums: AlbumInterface[] = initialData.filter(
-          (album) => album.id !== albumId,
-          alert,
-        );
-        mutate(updatedAlbums, false);
-      }
 
       message.success('Album deleted successfully');
     } catch (error) {
@@ -45,14 +41,14 @@ const AlbumControlPage: React.FC = () => {
 
   const menu = (albumId: number): React.JSX.Element => (
     <Menu>
-      <Menu.Item className={styles.menuItem} key="1">
-        <Link href={`/albums/edit/${albumId}`} className={styles.edit}>
+      <Menu.Item key="1">
+        <Link href={`/albums/edit/${albumId}`}>
           <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
           Edit Album
         </Link>
       </Menu.Item>
       <Menu.Item key="2" onClick={() => handleDelete(albumId)}>
-        <div className={styles.menuItemDelete}>
+        <div>
           <Icon name={IconNameEnum.Delete} width={24} height={24} />
           <Text
             htmlType={TextHtmlTypeEnum.Span}
@@ -65,37 +61,32 @@ const AlbumControlPage: React.FC = () => {
     </Menu>
   );
 
-  const columns: TableColumnsType<AlbumInterface> = [
+  const columns: TableColumnsType<TableDataType> = [
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text: string, record: AlbumInterface): React.JSX.Element => {
-        const artistNames: string =
-          record.artists
-            ?.map((artist) => `${artist.firstName} ${artist.lastName}`)
-            .join(', ') || 'Unknown Artist';
-
-        return (
-          <HitsItemDisplay
-            item={{
-              artistName: artistNames,
-              name: record.name,
-              backgroundImage: record.history?.location,
-            }}
-          />
-        );
-      },
+      render: (text: string, record: TableDataType): React.JSX.Element => (
+        <HitsItemDisplay
+          item={{
+            artistName:
+              record.artists
+                ?.map((artist) => `${artist.firstName} ${artist.lastName}`)
+                .join(', ') || 'Unknown Artist',
+            name: record.name,
+            backgroundImage: record.albums?.history?.location,
+          }}
+        />
+      ),
     },
     {
       title: 'Musics',
       dataIndex: 'musics',
-      render: (musics: any[]): number => musics.length,
+      render: (musics: MusicInterface[]): number => musics.length,
     },
     {
       title: '',
       key: 'action',
-      width: 20,
-      render: (_, record) => (
+      render: (_, record: TableDataType) => (
         <Dropdown
           overlay={menu(record.id)}
           trigger={['click']}
@@ -103,29 +94,11 @@ const AlbumControlPage: React.FC = () => {
         >
           <Button
             icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-            className={styles.dropdownButton}
           />
         </Dropdown>
       ),
     },
   ];
-
-  const router = useRouter();
-
-  const onClick = (album: { id: number }) => {
-    router.push(`/albums/${album.id}`);
-  };
-
-  const data: AlbumInterface[] = initialData
-    ? initialData?.map?.((album) => ({
-        key: album.id,
-        id: album.id,
-        name: album.name,
-        musics: album.musics || [],
-        history: album.history,
-        artists: album.artists,
-      }))
-    : [];
 
   return (
     <div className={styles.container}>

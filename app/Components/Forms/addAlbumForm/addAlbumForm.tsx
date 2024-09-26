@@ -1,6 +1,6 @@
 'use client';
 
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -46,15 +46,11 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
         ? `https://back.dnck.ge/albums/${albumId}`
         : 'https://back.dnck.ge/albums';
 
-      const response: AxiosResponse = await axios[albumId ? 'put' : 'post'](
-        url,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      await axios[albumId ? 'put' : 'post'](url, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       router.push('/uploaded/albumUploaded');
     } catch (err) {

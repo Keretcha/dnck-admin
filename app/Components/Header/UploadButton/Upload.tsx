@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import Icon from '../../Icon/Icon';
-import { IconNameEnum } from '../../Icon/enums/icon-name.enum';
 import styles from './Upload.module.scss';
 import { UploadButtonInterfaces } from './interfaces/upload-button.interfaces';
 

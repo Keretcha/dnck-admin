@@ -27,14 +27,16 @@ export default function Home(): JSX.Element {
     fetchMusics();
   }, []);
 
-  type DataType = MusicInterface;
-  const transformedMusics = musics?.map((music) => ({
-    id: music.id,
-    name: music.name,
-    album: music.album,
-    src: music.src,
-    history: music.history,
-  }));
+  type DataType = MusicInterface[];
+  const transformedMusics: MusicInterface[] = musics
+    ? musics.map((music) => ({
+        id: music.id,
+        name: music.name,
+        album: music.album,
+        src: music.src,
+        history: music.history,
+      }))
+    : [];
 
   return (
     <div>

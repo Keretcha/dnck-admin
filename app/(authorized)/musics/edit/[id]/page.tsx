@@ -1,21 +1,20 @@
 'use client';
 import { message } from 'antd';
-import { AxiosResponse } from 'axios';
 import { useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import styles from './page.module.scss';
+import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import { MusicInterface } from '@/app/(authorized)/albums/interfaces/music.interface';
 import Button from '@/app/Components/Button/Button';
 import { ButtonTypeEnum } from '@/app/Components/Button/enums/button-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
-import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 
 const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const { register, handleSubmit, reset } = useForm();
-  const { data: musicData, error } = useSWR<MusicInterface>(
+  const { data: musicData } = useSWR<MusicInterface>(
     `/musics/${props.params.id}`,
     fetcher,
   );
@@ -34,7 +33,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     const token: string | null = getCookie('accessToken');
 
     try {
-      const response: AxiosResponse = await ApiClient.put(
+      await ApiClient.put(
         `https://back.dnck.ge/musics/${props.params.id}`,
         data,
         {
@@ -46,16 +45,18 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
       message.success('Music updated successfully!');
     } catch (error) {
       message.error('Failed to update music. Please try again.');
-      console.error('Error details:', error);
+      console.error('Error details:');
     }
   };
 
-  const renderAlbumOptions = () => {
-    return albumsData?.map((props: AlbumInterface) => (
-      <option key={props.id} value={props.id}>
-        {props.name}
-      </option>
-    ));
+  const renderAlbumOptions = (): JSX.Element[] => {
+    return (
+      albumsData?.map((props: AlbumInterface) => (
+        <option key={props.id} value={props.id}>
+          {props.name}
+        </option>
+      )) || []
+    );
   };
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         description: musicData.history,
       });
     }
-  }, [musicData]);
+  }, [musicData, reset]);
 
   return (
     <div className={styles.addArtist}>
