@@ -12,6 +12,7 @@ import HitsItemDisplay from './hitsitems/hitsItems';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
+import Link from 'next/link';
 
 const ArtistControlTable: React.FC = () => {
   const { data: initialData } = useSWR<ArtistInterface[]>('/artists', fetcher);
@@ -42,8 +43,10 @@ const ArtistControlTable: React.FC = () => {
   const menu = (artistId: number): React.ReactElement => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="edit">
-        <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
-        Edit Artist
+        <Link href={`/artist/edit/${artistId}`}>
+          <Icon name={IconNameEnum.EditArtist} width={24} height={24} />
+          Edit Artist
+        </Link>
       </Menu.Item>
       <Menu.Item
         className={styles.menuItemDelete}

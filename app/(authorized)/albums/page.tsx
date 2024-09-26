@@ -1,7 +1,5 @@
 'use client';
 
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { AlbumInterface } from './interfaces/albums.interfaces';
 import { TableDataType } from './interfaces/music.interface';

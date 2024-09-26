@@ -19,7 +19,7 @@ export default function Home(): JSX.Element {
         <div className={styles.sections}>
           <div className={styles.content}>
             <div className={styles.cards}>
-              <ContentHeading href={'/artists'}>
+              <ContentHeading href={'/artist'}>
                 Recently Added Artists
               </ContentHeading>
               <div className={styles.cards}>
@@ -59,13 +59,13 @@ export default function Home(): JSX.Element {
             </div>
           </div>
           <div className={styles.content}>
-            <ContentHeading href={'/artists'}>
+            <ContentHeading href={'/artist'}>
               Recently Added Artists
             </ContentHeading>
             <div className={styles.cards}>
               {musics && (
                 <HitsCards
-                  items={musics.slice(0, 9).map((hit) => {
+                  items={musics.slice(0, 100).map((hit) => {
                     return {
                       backgroundImage: hit?.album?.history?.location,
                       album: hit.album,

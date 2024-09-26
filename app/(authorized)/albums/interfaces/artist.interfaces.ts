@@ -1,10 +1,9 @@
 import { MusicInterface } from './music.interface';
 
 export interface ArtistInterface {
-  artists: any;
+  artists: string;
   id: number;
   musics: MusicInterface[];
-  name: string;
   firstName: string;
   lastName: string;
   biography: string;
