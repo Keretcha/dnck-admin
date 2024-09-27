@@ -13,7 +13,7 @@ const AlbumCard: AlbumCardType = (props: AlbumCardPropsInterface) => {
       <div className={`${styles.albumCard} ${styles.dark}`}>
         <div className={styles.albumCardImage}>
           <Image
-            src={props.image}
+            src={props.imgUrl}
             alt={props.albumName}
             width={184}
             height={146}
