@@ -12,6 +12,7 @@ import { TextHtmlTypeEnum } from '@/app/Components/Text/enums/text-html-type.enu
 import { TextTypeEnum } from '@/app/Components/Text/enums/text-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
+import { AlbumInterface } from '../interfaces/albums.interfaces';
 
 const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
   const { data, error, mutate } = useSWR<{ musics: MusicInterface[] }>(
@@ -76,8 +77,8 @@ const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
         <HitsItemDisplay
           item={{
             name: record.name,
-            backgroundImage: record?.album?.history?.location,
             albumName: record?.name,
+            backgroundImage: record.history?.location,
           }}
         />
       ),

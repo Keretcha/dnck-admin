@@ -12,6 +12,7 @@ export interface MusicInterface {
 }
 
 export interface TableDataType {
+  imgUrl: string;
   id: number;
   key: string;
   name: string;
