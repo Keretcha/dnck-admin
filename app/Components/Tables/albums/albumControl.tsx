@@ -13,10 +13,7 @@ import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import HitsItemDisplay from '../artists/hitsitems/hitsItems';
 import styles from './albumControl.module.scss';
-import {
-  MusicInterface,
-  TableDataType,
-} from '@/app/(authorized)/albums/interfaces/music.interface';
+import { TableDataType } from '@/app/(authorized)/albums/interfaces/music.interface';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 
@@ -65,24 +62,30 @@ const AlbumControlPage: React.FC<AlbumControlPageProps> = ({ data }) => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text: string, record: TableDataType): React.JSX.Element => (
-        <HitsItemDisplay
-          item={{
-            artistName:
-              record.artists
-                ?.map((artist) => `${artist.firstName} ${artist.lastName}`)
-                .join(', ') || 'Unknown Artist',
-            name: record.name,
-            backgroundImage: record.albums?.history?.location,
-          }}
-        />
-      ),
+      render: (text: string, record: TableDataType): React.JSX.Element => {
+        console.log(record);
+
+        return (
+          <HitsItemDisplay
+            item={{
+              artistName:
+                record.artists
+                  ?.map((artist) => `${artist.firstName} ${artist.lastName}`)
+                  .join(', ') || 'Unknown Artist',
+              name: record.name,
+              backgroundImage: record.imgUrl || '',
+            }}
+          />
+        );
+      },
     },
+
     {
       title: 'Musics',
       dataIndex: 'musics',
-      render: (musics: MusicInterface[]): number => musics.length,
+      render: (musics): number => musics.length,
     },
+
     {
       title: '',
       key: 'action',
