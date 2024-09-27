@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
                     items={albums.slice(0, 100).map((album) => ({
                       title: album.name,
                       imgUrl: album.history?.location,
-                      artists: album.artists,
+                      artists: album.artists || [],
                       dropDownItems: [],
                       id: album.id,
                     }))}

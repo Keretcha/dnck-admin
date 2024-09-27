@@ -3,8 +3,8 @@ import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.int
 
 export interface AlbumCardItemsInterface {
   dropDownItems: DropDownItemsInterface[];
-  imgUrl?: string | undefined;
-  artists: ArtistInterface[] | undefined;
+  imgUrl: string;
+  artists: ArtistInterface[];
   title: string;
   href?: string;
   id: number;

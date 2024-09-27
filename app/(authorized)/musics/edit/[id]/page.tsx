@@ -92,11 +92,7 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         </div>
         <div className={styles.inputs}>
           <label>Upload Album Cover</label>
-          <input
-            type="file"
-            {...register('src')} // Keep it simple, no need for required if optional
-            className={styles.bigInput}
-          />
+          <input type="file" {...register('src')} className={styles.bigInput} />
         </div>
         <Button
           className={styles.uploadButton}

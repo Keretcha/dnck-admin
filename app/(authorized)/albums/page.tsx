@@ -11,12 +11,12 @@ export default function Home(): JSX.Element {
 
   const tableData: TableDataType[] = albums
     ? albums?.map?.((album, index) => {
-        console.log(album);
         return {
           key: index.toString(),
           name: album.name,
           musics: album.musics?.length || 0,
           id: album.id,
+          imgUrl: album.history?.location,
         };
       })
     : [];
