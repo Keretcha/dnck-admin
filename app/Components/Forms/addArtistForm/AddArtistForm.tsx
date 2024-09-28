@@ -7,10 +7,12 @@ import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addArtistForm.module.scss';
 import { getCookie } from '@/helpers/cookies';
+import { useState } from 'react';
 
 const AddArtistForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
@@ -30,6 +32,15 @@ const AddArtistForm = (): JSX.Element => {
       router.push('/uploaded/artistUploaded');
     } catch (err) {
       console.error('Cannot load this page', err);
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFileName(file.name);
+    } else {
+      setFileName(null);
     }
   };
 
@@ -74,10 +85,14 @@ const AddArtistForm = (): JSX.Element => {
           {...register('file', { required: true })}
           id="file-upload"
           className={styles.fileInput}
+          onChange={handleFileChange}
         />
         <label htmlFor="file-upload" className={styles.fileLabel}>
-          Select music
-          <span className={styles.colored}> file or drop music file here.</span>
+          {fileName ? (
+            <span className={styles.fileName}>{fileName}</span>
+          ) : (
+            <span>Select music file or drop music file here.</span>
+          )}
         </label>
       </div>
       <div>

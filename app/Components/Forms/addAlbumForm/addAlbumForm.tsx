@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import Button from '../../Button/Button';
@@ -20,6 +21,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
     '/artists',
     fetcher,
   );
+  const [fileName, setFileName] = useState<string | null>(null);
 
   if (error) return <div>Error loading artists.</div>;
   if (!artists) return <div>Loading...</div>;
@@ -56,6 +58,13 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
     } catch (err) {
       console.error('Failed to upload album', err);
     }
+  };
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const file: File | undefined = event.target.files?.[0];
+    setFileName(file ? file.name : null);
   };
 
   return (
@@ -102,13 +111,14 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
             {...register('file', { required: true })}
             id="file-upload"
             className={styles.fileInput}
+            onChange={handleFileChange}
           />
           <label htmlFor="file-upload" className={styles.fileLabel}>
-            Select music
-            <span className={styles.colored}>
-              {' '}
-              file or drop music file here.
-            </span>
+            {fileName ? (
+              <span className={styles.fileName}>{fileName}</span>
+            ) : (
+              <span>Select music file or drop music file here.</span>
+            )}
           </label>
         </div>
         <Button

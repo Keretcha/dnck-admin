@@ -10,11 +10,13 @@ import styles from './addMusicForm.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
+import { useState } from 'react';
 
 const AddMusicForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
   const { data: albums, error } = useSWR<AlbumInterface[]>('/albums', fetcher);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleLoadingState = (): JSX.Element | null => {
     if (error) return <div>Error loading albums.</div>;
@@ -40,6 +42,11 @@ const AddMusicForm = (): JSX.Element => {
     } catch (err) {
       console.error('Unable to upload music', err);
     }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setFileName(file ? file.name : null);
   };
 
   const renderAlbumOptions = (): JSX.Element[] | undefined => {
@@ -71,12 +78,19 @@ const AddMusicForm = (): JSX.Element => {
                 {...register('src', { required: true })}
                 id="file-upload"
                 className={styles.fileInput}
+                onChange={handleFileChange}
               />
               <label htmlFor="file-upload" className={styles.fileLabel}>
-                Select music
-                <span className={styles.colored}>
-                  file or drop music file here.
-                </span>
+                {fileName ? (
+                  <span className={styles.fileName}>{fileName}</span>
+                ) : (
+                  <span>
+                    Select music{' '}
+                    <span className={styles.colored}>
+                      file or drop music file here.
+                    </span>
+                  </span>
+                )}
               </label>
             </div>
           </div>
