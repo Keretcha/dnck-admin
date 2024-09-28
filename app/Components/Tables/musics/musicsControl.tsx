@@ -65,9 +65,8 @@ const MusicControlPage: React.FC<MusicControlPageProps> = ({ data }) => {
       render: (text: string, record: MusicInterface) => (
         <HitsItemDisplay
           item={{
-            name: record.name,
             backgroundImage: record.album?.history?.location,
-            albumName: record.album?.name,
+            artistName: record.name,
           }}
         />
       ),
