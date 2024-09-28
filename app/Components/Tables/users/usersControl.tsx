@@ -28,7 +28,7 @@ const UsersTable: React.FC = () => {
     try {
       await axios.delete(`https://back.dnck.ge/users/${userId}`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Correct token usage
+          Authorization: `Bearer ${token}`,
         },
       });
 

@@ -5,19 +5,16 @@ import useSWR from 'swr';
 import { UserInterface } from '@/app/Components/Tables/users/interfaces/users-control.interfaces';
 import UsersTable from '@/app/Components/Tables/users/usersControl';
 import { fetcher } from '@/app/api/fetcher';
-import { getCookie, setCookie } from '@/helpers/cookies';
 
 export default function UsersPage(): JSX.Element {
   const { data: users, error } = useSWR<UserInterface[]>('/users', fetcher);
   const [loading, setLoading] = useState<boolean>(!users && !error);
 
-  
   useEffect(() => {
     const fetchUsers = async (): Promise<void> => {
       try {
         const response: AxiosResponse<UserInterface[]> = await axios.get(
           'https://back.dnck.ge/users',
-          
         );
         localStorage.setItem('response.data', JSON.stringify(response.data));
       } catch (err) {
