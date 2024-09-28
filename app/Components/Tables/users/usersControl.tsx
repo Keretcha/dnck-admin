@@ -1,4 +1,5 @@
-import { message, Menu, TableColumnsType, Dropdown, Button, Table } from 'antd';
+import { message, Menu, Button, TableColumnsType, Dropdown, Table } from 'antd';
+import axios from 'axios';
 import Link from 'next/link';
 import useSWR from 'swr';
 import Icon from '../../Icon/Icon';
@@ -8,38 +9,40 @@ import { TextHtmlTypeEnum } from '../../Text/enums/text-html-type.enum';
 import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import { UserInterface } from './interfaces/users-control.interfaces';
 import styles from './usersControl.module.scss';
-import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
-
-interface UsersTableProps {
-  data: UserInterface[];
-}
-
-const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
-  const { mutate } = useSWR<UserInterface[]>('/users', fetcher);
-
-  const handleBlock = async (userId: number): Promise<void> => {
-    console.log(`Attempting to block user with ID: ${userId}`);
-
+const UsersTable: React.FC = () => {
+  const { data: users = [], mutate } = useSWR<UserInterface[]>(
+    '/users',
+    fetcher,
+  );
+  const handleDelete = async (userId: number): Promise<void> => {
     try {
-      await ApiClient.delete(`/users/${userId}`);
-      mutate();
+      await axios.delete(`https://back.dnck.ge/users/${userId}`);
+      if (Array.isArray(users)) {
+        const updatedUsers: UserInterface[] = users.filter(
+          (user) => user.id !== userId,
+        );
+        mutate(updatedUsers, false);
+      }
+      message.success('User deleted successfully');
     } catch (error) {
-      console.error('Error blocking user:', error);
-      message.error('Failed to block user');
+      message.error('Failed to delete user');
     }
   };
-
-  const renderMenu = (userId: number): React.ReactElement => (
+  const menu = (userId: number): React.ReactElement => (
     <Menu>
-      <Menu.Item key="edit">
+      <Menu.Item className={styles.menuItem} key="1">
         <Link href={`/users/edit/${userId}`} className={styles.edit}>
           <Icon name={IconNameEnum.Lock} width={24} height={24} />
           Change Password
         </Link>
       </Menu.Item>
-      <Menu.Item key="block" onClick={() => handleBlock(userId)}>
-        <div className={styles.block}>
+      <Menu.Item
+        className={styles.menuItemDelete}
+        key="2"
+        onClick={() => handleDelete(userId)}
+      >
+        <Link href={'/'} className={styles.block}>
           <Icon name={IconNameEnum.Block} width={24} height={24} />
           <Text
             htmlType={TextHtmlTypeEnum.Span}
@@ -47,11 +50,10 @@ const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
           >
             Block
           </Text>
-        </div>
+        </Link>
       </Menu.Item>
     </Menu>
   );
-
   const columns: TableColumnsType<UserInterface> = [
     {
       title: 'Email',
@@ -61,32 +63,26 @@ const UsersTable: React.FC<UsersTableProps> = ({ data }) => {
     {
       title: 'Action',
       key: 'action',
-      render: (record: UserInterface) => (
-        <Dropdown
-          overlay={renderMenu(record.id)}
-          trigger={['click']}
-          placement="bottomRight"
-        >
-          <Button
-            icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-          />
-        </Dropdown>
-      ),
+      render: (_, record: UserInterface) => {
+        return (
+          <Dropdown
+            overlay={menu(record.id)}
+            trigger={['click']}
+            placement="bottomRight"
+          >
+            <Button
+              icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
+            />
+          </Dropdown>
+        );
+      },
     },
   ];
-
-  if (!data.length) return <div className={styles.load}>Loading...</div>;
-
+  if (!users.length) return <div className={styles.load}>Loading...</div>;
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={false}
-        rowKey="id"
-      />
+      <Table columns={columns} dataSource={users} pagination={false} />
     </div>
   );
 };
-
 export default UsersTable;
