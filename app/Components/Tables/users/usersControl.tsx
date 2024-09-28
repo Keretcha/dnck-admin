@@ -10,14 +10,28 @@ import { TextTypeEnum } from '../../Text/enums/text-type.enum';
 import { UserInterface } from './interfaces/users-control.interfaces';
 import styles from './usersControl.module.scss';
 import { fetcher } from '@/app/api/fetcher';
+import { getCookie } from '@/helpers/cookies';
+
 const UsersTable: React.FC = () => {
   const { data: users = [], mutate } = useSWR<UserInterface[]>(
     '/users',
     fetcher,
   );
+  const token: string | null = getCookie('accessToken');
+
   const handleDelete = async (userId: number): Promise<void> => {
+    if (!token) {
+      message.error('No access token available');
+      return;
+    }
+
     try {
-      await axios.delete(`https://back.dnck.ge/users/${userId}`);
+      await axios.delete(`https://back.dnck.ge/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (Array.isArray(users)) {
         const updatedUsers: UserInterface[] = users.filter(
           (user) => user.id !== userId,
@@ -29,6 +43,7 @@ const UsersTable: React.FC = () => {
       message.error('Failed to delete user');
     }
   };
+
   const menu = (userId: number): React.ReactElement => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
@@ -54,6 +69,7 @@ const UsersTable: React.FC = () => {
       </Menu.Item>
     </Menu>
   );
+
   const columns: TableColumnsType<UserInterface> = [
     {
       title: 'Email',
@@ -76,11 +92,14 @@ const UsersTable: React.FC = () => {
       ),
     },
   ];
+
   if (!users.length) return <div className={styles.load}>Loading...</div>;
+
   return (
     <div>
       <Table columns={columns} dataSource={users} pagination={false} />
     </div>
   );
 };
+
 export default UsersTable;
