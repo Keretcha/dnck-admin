@@ -12,12 +12,16 @@ import { TextHtmlTypeEnum } from '@/app/Components/Text/enums/text-html-type.enu
 import { TextTypeEnum } from '@/app/Components/Text/enums/text-type.enum';
 import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
+import { useEffect, useMemo, useState } from 'react';
 
 const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
-  const { data, error, mutate } = useSWR<{ musics: MusicInterface[] }>(
-    `/albums/${props.params.id}`,
-    fetcher,
-  );
+  const { data, error, mutate } = useSWR<{
+    musics: MusicInterface[];
+    history: any;
+  }>(`/albums/${props.params.id}`, fetcher);
+  // const [columns, setColumns] = useState([]);
+
+  console.log(data?.history.location, 'data history location');
 
   if (error) {
     message.error(`Failed to load music: ${error.message}`);
@@ -72,15 +76,18 @@ const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (_text, record: MusicInterface) => (
-        <HitsItemDisplay
-          item={{
-            name: record.name,
-            backgroundImage: record?.album?.history?.location,
-            albumName: record?.name,
-          }}
-        />
-      ),
+      render: (_text, record: MusicInterface) => {
+        console.log(record, 'record aeee');
+        return (
+          <HitsItemDisplay
+            item={{
+              name: record.name,
+              albumName: record?.name,
+              backgroundImage: data?.history?.location,
+            }}
+          />
+        );
+      },
     },
     {
       title: '',
