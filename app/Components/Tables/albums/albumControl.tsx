@@ -83,7 +83,7 @@ const AlbumControlPage: React.FC<AlbumControlPageProps> = ({ data }) => {
     {
       title: 'Musics',
       dataIndex: 'musics',
-      render: (musics, record): JSX.Element => {
+      render: (musics): JSX.Element => {
         return <div>{musics}</div>;
       },
     },
