@@ -14,10 +14,10 @@ import { ApiClient } from '@/app/api/api';
 import { fetcher } from '@/app/api/fetcher';
 
 const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
-  const { data, error, mutate } = useSWR<{ musics: MusicInterface[] }>(
-    `/albums/${props.params.id}`,
-    fetcher,
-  );
+  const { data, error, mutate } = useSWR<{
+    musics: MusicInterface[];
+    history: { location: string };
+  }>(`/albums/${props.params.id}`, fetcher);
 
   if (error) {
     message.error(`Failed to load music: ${error.message}`);
@@ -76,8 +76,8 @@ const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
         <HitsItemDisplay
           item={{
             name: record.name,
-            backgroundImage: record?.album?.history?.location,
             albumName: record?.name,
+            backgroundImage: data?.history?.location,
           }}
         />
       ),

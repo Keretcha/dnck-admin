@@ -9,6 +9,7 @@ export interface MusicInterface {
   history: {
     location: string;
   };
+  artists?: ArtistInterface;
 }
 
 export interface TableDataType {

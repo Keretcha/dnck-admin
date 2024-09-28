@@ -13,7 +13,7 @@ const HitsItemDisplay: React.FC<{ item?: HitsCardItemsInterface }> = ({
 
   const backgroundImageStyle: CSSProperties = item?.backgroundImage
     ? {
-        backgroundImage: `url('${item.album?.history.location}')`,
+        backgroundImage: `url('${item.backgroundImage}')`,
         width: 50,
         height: 50,
         backgroundSize: 'cover',
