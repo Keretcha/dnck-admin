@@ -63,19 +63,17 @@ const UsersTable: React.FC = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (_, record: UserInterface) => {
-        return (
-          <Dropdown
-            overlay={menu(record.id)}
-            trigger={['click']}
-            placement="bottomRight"
-          >
-            <Button
-              icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
-            />
-          </Dropdown>
-        );
-      },
+      render: (_: string, record: UserInterface) => (
+        <Dropdown
+          overlay={menu(record.id)}
+          trigger={['click']}
+          placement="bottomRight"
+        >
+          <Button
+            icon={<Icon name={IconNameEnum.Dot} width={24} height={24} />}
+          />
+        </Dropdown>
+      ),
     },
   ];
   if (!users.length) return <div className={styles.load}>Loading...</div>;
