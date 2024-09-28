@@ -1,14 +1,14 @@
-// UsersPage.tsx
-
 'use client';
 import axios, { AxiosResponse } from 'axios';
-import router from 'next/router';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { UserInterface } from '@/app/Components/Tables/users/interfaces/users-control.interfaces';
 import UsersTable from '@/app/Components/Tables/users/usersControl';
+import { fetcher } from '@/app/api/fetcher';
 
 export default function UsersPage(): JSX.Element {
-  const [users, setUsers] = useState<UserInterface[]>([]); // Update this to UserInterface
+  const { data: users, error } = useSWR<UserInterface[]>('/users', fetcher);
+  const [loading, setLoading] = useState<boolean>(!users && !error);
 
   useEffect(() => {
     const fetchUsers = async (): Promise<void> => {
@@ -16,19 +16,34 @@ export default function UsersPage(): JSX.Element {
         const response: AxiosResponse<UserInterface[]> = await axios.get(
           'https://back.dnck.ge/users',
         );
-        setUsers(response.data);
         localStorage.setItem('response.data', JSON.stringify(response.data));
-        router.push('/uploaded');
       } catch (err) {
         console.error('Cannot load this page', err);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchUsers();
-  }, []);
+
+    if (!users) {
+      fetchUsers();
+    } else {
+      setLoading(false);
+    }
+  }, [users]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Failed to load users.</div>;
+  }
+
+  console.log('Users state:', users);
 
   return (
     <div>
-      <UsersTable data={users} />
+      <UsersTable />
     </div>
   );
 }

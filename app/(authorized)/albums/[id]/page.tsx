@@ -76,8 +76,8 @@ const AlbumMusics = (props: { params: { id: number } }): JSX.Element => {
         <HitsItemDisplay
           item={{
             name: record.name,
+            backgroundImage: record?.album?.history?.location,
             albumName: record?.name,
-            backgroundImage: record.history?.location,
           }}
         />
       ),
