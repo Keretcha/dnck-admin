@@ -2,12 +2,12 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
 import styles from './addArtistForm.module.scss';
 import { getCookie } from '@/helpers/cookies';
-import { useState } from 'react';
 
 const AddArtistForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
@@ -35,8 +35,10 @@ const AddArtistForm = (): JSX.Element => {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const file: File | undefined = event.target.files?.[0];
     if (file) {
       setFileName(file.name);
     } else {

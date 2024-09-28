@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import Button from '../../Button/Button';
@@ -10,7 +11,6 @@ import styles from './addMusicForm.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
-import { useState } from 'react';
 
 const AddMusicForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
@@ -44,8 +44,10 @@ const AddMusicForm = (): JSX.Element => {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const file: File | undefined = event.target.files?.[0];
     setFileName(file ? file.name : null);
   };
 
