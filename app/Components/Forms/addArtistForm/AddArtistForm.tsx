@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
@@ -11,6 +12,7 @@ import { getCookie } from '@/helpers/cookies';
 const AddArtistForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
@@ -30,6 +32,17 @@ const AddArtistForm = (): JSX.Element => {
       router.push('/uploaded/artistUploaded');
     } catch (err) {
       console.error('Cannot load this page', err);
+    }
+  };
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const file: File | undefined = event.target.files?.[0];
+    if (file) {
+      setFileName(file.name);
+    } else {
+      setFileName(null);
     }
   };
 
@@ -68,8 +81,21 @@ const AddArtistForm = (): JSX.Element => {
         />
       </div>
       <div className={styles.customFileUpload}>
-        <label htmlFor="file">Select Music</label>
-        <input type="file" {...register('file')} />
+        <label htmlFor="file-upload">Select Music</label>
+        <input
+          type="file"
+          {...register('file', { required: true })}
+          id="file-upload"
+          className={styles.fileInput}
+          onChange={handleFileChange}
+        />
+        <label htmlFor="file-upload" className={styles.fileLabel}>
+          {fileName ? (
+            <span className={styles.fileName}>{fileName}</span>
+          ) : (
+            <span>Select music file or drop music file here.</span>
+          )}
+        </label>
       </div>
       <div>
         <Button

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import Button from '../../Button/Button';
@@ -15,6 +16,7 @@ const AddMusicForm = (): JSX.Element => {
   const { register, handleSubmit } = useForm();
   const router: AppRouterInstance = useRouter();
   const { data: albums, error } = useSWR<AlbumInterface[]>('/albums', fetcher);
+  const [fileName, setFileName] = useState<string | null>(null);
 
   const handleLoadingState = (): JSX.Element | null => {
     if (error) return <div>Error loading albums.</div>;
@@ -40,6 +42,13 @@ const AddMusicForm = (): JSX.Element => {
     } catch (err) {
       console.error('Unable to upload music', err);
     }
+  };
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const file: File | undefined = event.target.files?.[0];
+    setFileName(file ? file.name : null);
   };
 
   const renderAlbumOptions = (): JSX.Element[] | undefined => {
@@ -71,12 +80,19 @@ const AddMusicForm = (): JSX.Element => {
                 {...register('src', { required: true })}
                 id="file-upload"
                 className={styles.fileInput}
+                onChange={handleFileChange}
               />
               <label htmlFor="file-upload" className={styles.fileLabel}>
-                Select music
-                <span className={styles.colored}>
-                  file or drop music file here.
-                </span>
+                {fileName ? (
+                  <span className={styles.fileName}>{fileName}</span>
+                ) : (
+                  <span>
+                    Select music{' '}
+                    <span className={styles.colored}>
+                      file or drop music file here.
+                    </span>
+                  </span>
+                )}
               </label>
             </div>
           </div>
