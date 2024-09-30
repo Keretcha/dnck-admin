@@ -1,5 +1,6 @@
 'use client';
 
+import { message } from 'antd';
 import { AxiosResponse } from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter } from 'next/navigation';
@@ -20,23 +21,21 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
   const router: AppRouterInstance = useRouter();
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
-    const { email, password } = values;
+    const { password } = values;
 
     if (password !== watch('rePassword')) {
-      console.error('Passwords do not match');
+      alert('Passwords do not match');
       return;
     }
-
-    const data: FormData = new FormData();
-    data.append('email', email);
-    data.append('password', password);
 
     const token: string | null = getCookie('accessToken');
 
     try {
-      const response: AxiosResponse = await ApiClient.put(
-        `/users/${props.params.id}`,
-        data,
+      const response: AxiosResponse = await ApiClient.patch(
+        `/users/password/${props.params.id}`,
+        {
+          password,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,9 +43,9 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
         },
       );
       router.push('/users');
-      console.log('Password updated successfully:', response.data);
+      message.success('Password updated successfully:', response.data);
     } catch (error) {
-      console.error('Error updating password:', error);
+      message.error('Error updating password:');
     }
   };
 
@@ -62,15 +61,6 @@ const AddAlbumForm = (props: { params: { id: number } }): JSX.Element => {
     <div className={styles.addArtist}>
       <h1>Change Password</h1>
       <form className={styles.forms} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.inputs}>
-          <label>User Email</label>
-          <input
-            type="email"
-            {...register('email', { required: true, maxLength: 32 })}
-            className={styles.smallInput}
-            placeholder="User Email."
-          />
-        </div>
         <div className={styles.inputs}>
           <label>New Password</label>
           <input

@@ -35,4 +35,5 @@ export enum IconNameEnum {
   Delete = 'trash',
   Block = 'Block',
   WhitePlus = 'whitePlus',
+  Unlock = 'gelagnolidze',
 }

@@ -5,4 +5,5 @@ export interface UserInterface {
   password?: string;
   history: { location: string };
   artists: string[];
+  deletedAt: boolean;
 }

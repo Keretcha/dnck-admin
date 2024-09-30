@@ -32,32 +32,71 @@ const UsersTable: React.FC = () => {
         },
       });
 
-      if (Array.isArray(users)) {
-        const updatedUsers: UserInterface[] = users.filter(
-          (user) => user.id !== userId,
-        );
-        mutate(updatedUsers, false);
-      }
+      const updatedUsers: UserInterface[] = users.filter(
+        (user) => user.id !== userId,
+      );
+      mutate(updatedUsers, true);
       message.success('User deleted successfully');
     } catch (error) {
       message.error('Failed to delete user');
     }
   };
 
-  const menu = (userId: number): React.ReactElement => (
+  const handleUnblock = async (userId: number): Promise<void> => {
+    if (!token) {
+      message.error('No access token available');
+      return;
+    }
+
+    try {
+      await axios.patch(
+        `https://back.dnck.ge/users/unblock/${userId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const updatedUsers: UserInterface[] = users.map((user) =>
+        user.id === userId ? { ...user, blocked: false } : user,
+      );
+      mutate(updatedUsers, false);
+      message.success('User unblocked successfully');
+    } catch (error) {
+      message.error('Failed to unblock user');
+    }
+  };
+
+  const menu = (user: UserInterface): React.ReactElement => (
     <Menu>
       <Menu.Item className={styles.menuItem} key="1">
-        <Link href={`/users/edit/${userId}`} className={styles.edit}>
+        <Link href={`/users/edit/${user.id}`} className={styles.edit}>
           <Icon name={IconNameEnum.Lock} width={24} height={24} />
           Change Password
         </Link>
       </Menu.Item>
-      <Menu.Item
-        className={styles.menuItemDelete}
-        key="2"
-        onClick={() => handleDelete(userId)}
-      >
-        <Link href={'/'} className={styles.block}>
+      {user.deletedAt ? (
+        <Menu.Item
+          className={styles.menuItemUnblock}
+          key="2"
+          onClick={() => handleUnblock(user.id)}
+        >
+          <Text
+            htmlType={TextHtmlTypeEnum.Span}
+            type={TextTypeEnum.SecondaryTextSmall}
+            className={styles.unblock}
+          >
+            Unblock
+          </Text>
+        </Menu.Item>
+      ) : (
+        <Menu.Item
+          className={styles.menuItemDelete}
+          key="3"
+          onClick={() => handleDelete(user.id)}
+        >
           <Icon name={IconNameEnum.Block} width={24} height={24} />
           <Text
             htmlType={TextHtmlTypeEnum.Span}
@@ -65,8 +104,8 @@ const UsersTable: React.FC = () => {
           >
             Block
           </Text>
-        </Link>
-      </Menu.Item>
+        </Menu.Item>
+      )}
     </Menu>
   );
 
@@ -81,7 +120,7 @@ const UsersTable: React.FC = () => {
       key: 'action',
       render: (_: string, record: UserInterface) => (
         <Dropdown
-          overlay={menu(record.id)}
+          overlay={menu(record)}
           trigger={['click']}
           placement="bottomRight"
         >
