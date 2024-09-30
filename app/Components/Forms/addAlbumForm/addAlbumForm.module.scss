@@ -9,11 +9,13 @@
   gap: 8px;
   color: $primary-white;
 }
+
 .forms {
   display: flex;
   flex-flow: column wrap;
   gap: 16px;
 }
+
 .smallInput {
   width: 360px;
   padding: 12px 16px;
@@ -23,6 +25,7 @@
   background-color: $admin-third;
   color: $primary-white;
 }
+
 .bigInput {
   padding: 24px;
   border-radius: 12px;
@@ -31,6 +34,7 @@
   background-color: $admin-third;
   color: $primary-white;
 }
+
 .uploadButton {
   display: flex;
   justify-content: center;
@@ -59,6 +63,7 @@
   max-height: 200px;
   overflow-x: hidden;
 }
+
 .option {
   background-color: $admin-third;
   border-radius: 12px;

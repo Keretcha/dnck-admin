@@ -6,13 +6,18 @@ import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
+import Errors from '../../Errors/Errors';
 import styles from './addMusicForm.module.scss';
 import { AlbumInterface } from '@/app/(authorized)/albums/interfaces/albums.interfaces';
 import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
 
 const AddMusicForm = (): JSX.Element => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router: AppRouterInstance = useRouter();
   const { data: albums, error } = useSWR<AlbumInterface[]>('/albums', fetcher);
 
@@ -62,7 +67,9 @@ const AddMusicForm = (): JSX.Element => {
               className={styles.smallInput}
               placeholder="EXP: Dagdagani-yofierebis autaneli sidzulvili"
             />
+            {errors.name && <Errors title="Music Name is required." />}
           </div>
+
           <div className={styles.inputs}>
             <label>Upload Music File</label>
             <div className={styles.customFileUpload}>
@@ -78,8 +85,10 @@ const AddMusicForm = (): JSX.Element => {
                   file or drop music file here.
                 </span>
               </label>
+              {errors.src && <Errors title="Music file is required." />}
             </div>
           </div>
+
           <div className={styles.chooseArtist}>
             <label>Choose Album</label>
             <select
@@ -89,6 +98,7 @@ const AddMusicForm = (): JSX.Element => {
               <option value="">Select an Album</option>
               {renderAlbumOptions()}
             </select>
+            {errors.albumId && <Errors title="Album selection is required." />}
           </div>
 
           <Button
