@@ -29,9 +29,17 @@
   border-radius: 12px;
 }
 .load {
-    font-size: 36px;
-    color: $primary-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-size: 36px;
+  color: $primary-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuItemUnblock {
+  color: $primary-white;
+}
+
+.unblock {
+  color: green;
 }
