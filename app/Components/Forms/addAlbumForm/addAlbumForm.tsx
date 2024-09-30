@@ -7,6 +7,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import Button from '../../Button/Button';
 import { ButtonTypeEnum } from '../../Button/enums/button-type.enum';
+import Errors from '../../Errors/Errors';
 import styles from './addAlbumForm.module.scss';
 import { AddAlbumFormProps } from './interfaces/chooseArtist.interface';
 import { ArtistInterface } from '@/app/(authorized)/albums/interfaces/artist.interfaces';
@@ -14,7 +15,11 @@ import { fetcher } from '@/app/api/fetcher';
 import { getCookie } from '@/helpers/cookies';
 
 const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router: AppRouterInstance = useRouter();
   const { data: artists, error } = useSWR<ArtistInterface[]>(
     '/artists',
@@ -26,7 +31,6 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
 
   const onSubmit = async (values: FieldValues): Promise<void> => {
     const data: FormData = new FormData();
-
     data.append('name', values.name);
     data.append('artistId', values.artistId);
     data.append('releaseDate', values.releaseDate);
@@ -35,7 +39,6 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
     }
 
     const token: string | null = getCookie('accessToken');
-
     if (!token) {
       console.error('No access token found');
       return;
@@ -47,9 +50,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
         : 'https://back.dnck.ge/albums';
 
       await axios[albumId ? 'put' : 'post'](url, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       router.push('/uploaded/albumUploaded');
@@ -68,6 +69,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
             className={styles.smallInput}
             placeholder="Exp: DAMN."
           />
+          {errors.name && <Errors title="Album name is required." />}
         </div>
         <div className={styles.inputs}>
           <label>Release Date</label>
@@ -76,6 +78,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
             {...register('releaseDate', { required: true })}
             className={styles.smallInput}
           />
+          {errors.releaseDate && <Errors title="Release date is required." />}
         </div>
         <div className={styles.chooseArtist}>
           <label>Choose Artist</label>
@@ -94,6 +97,7 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
               </option>
             ))}
           </select>
+          {errors.artistId && <Errors title="Artist selection is required." />}
         </div>
         <div className={styles.customFileUpload}>
           <label htmlFor="file-upload">Select Album Cover</label>
@@ -104,12 +108,13 @@ const AddAlbumForm: React.FC<AddAlbumFormProps> = ({ albumId }) => {
             className={styles.fileInput}
           />
           <label htmlFor="file-upload" className={styles.fileLabel}>
-            Select music
+            Select Image
             <span className={styles.colored}>
               {' '}
               file or drop music file here.
             </span>
           </label>
+          {errors.file && <Errors title="File selection is required." />}
         </div>
         <Button
           className={styles.uploadButton}
