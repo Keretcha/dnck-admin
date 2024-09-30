@@ -55,6 +55,9 @@
   background-position: right 10px center;
   background-size: 26px;
   cursor: pointer;
+  overflow-y: auto;
+  max-height: 200px;
+  overflow-x: hidden;
 }
 .option {
   background-color: $admin-third;
